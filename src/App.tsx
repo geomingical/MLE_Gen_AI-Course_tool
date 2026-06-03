@@ -1,6 +1,6 @@
 import { BookOpen, ExternalLink, Filter, Globe2, Search, Workflow } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Language, Tool, ToolStatus, pipelineHighlights, stages, statusOrder, tools } from "./data/tools";
+import { Language, Tool, ToolStatus, getToolMeta, pipelineHighlights, stages, statusOrder, tools } from "./data/tools";
 
 const labels = {
   zh: {
@@ -9,6 +9,8 @@ const labels = {
     search: "搜尋工具、標籤或課程",
     status: "狀態",
     stage: "技術流",
+    type: "類型",
+    level: "程度",
     all: "全部",
     catalog: "工具目錄",
     pipeline: "技術流",
@@ -17,6 +19,10 @@ const labels = {
     avoidWhen: "何時不要用",
     notes: "實務筆記",
     course: "課程對應",
+    role: "Pipeline 角色",
+    abstraction: "層級",
+    stack: "所屬 stack",
+    learnerNote: "學習者提示",
     tags: "標籤",
     markdown: "Markdown 原文",
     count: "個項目",
@@ -28,6 +34,8 @@ const labels = {
     search: "Search tools, tags, or course",
     status: "Status",
     stage: "Workflow",
+    type: "Type",
+    level: "Level",
     all: "All",
     catalog: "Catalog",
     pipeline: "Pipeline",
@@ -36,6 +44,10 @@ const labels = {
     avoidWhen: "When not to use",
     notes: "Practical notes",
     course: "Course mapping",
+    role: "Pipeline role",
+    abstraction: "Abstraction level",
+    stack: "Stack",
+    learnerNote: "Learner note",
     tags: "Tags",
     markdown: "Markdown source",
     count: "items",
@@ -53,7 +65,8 @@ function unique<T>(items: T[]): T[] {
   return Array.from(new Set(items));
 }
 
-function matches(tool: Tool, query: string, status: string, stage: string): boolean {
+function matches(tool: Tool, query: string, status: string, stage: string, itemType: string, level: string): boolean {
+  const meta = getToolMeta(tool);
   const q = query.trim().toLowerCase();
   const haystack = [
     tool.name,
@@ -61,6 +74,13 @@ function matches(tool: Tool, query: string, status: string, stage: string): bool
     tool.stage,
     tool.status,
     tool.course,
+    meta.itemType,
+    meta.role,
+    meta.abstractionLevel,
+    meta.learningLevel,
+    meta.stack,
+    meta.learnerNote.zh,
+    meta.learnerNote.en,
     ...tool.tags,
     tool.zh.summary,
     tool.en.summary,
@@ -68,7 +88,13 @@ function matches(tool: Tool, query: string, status: string, stage: string): bool
     .join(" ")
     .toLowerCase();
 
-  return (!q || haystack.includes(q)) && (status === "all" || tool.status === status) && (stage === "all" || tool.stage === stage);
+  return (
+    (!q || haystack.includes(q)) &&
+    (status === "all" || tool.status === status) &&
+    (stage === "all" || tool.stage === stage) &&
+    (itemType === "all" || meta.itemType === itemType) &&
+    (level === "all" || meta.learningLevel === level)
+  );
 }
 
 export function App() {
@@ -76,12 +102,17 @@ export function App() {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<string>("all");
   const [stage, setStage] = useState<string>("all");
+  const [itemType, setItemType] = useState<string>("all");
+  const [level, setLevel] = useState<string>("all");
   const [selectedId, setSelectedId] = useState("openai-sdk");
   const t = labels[language];
 
   const categories = useMemo(() => unique(tools.map((tool) => tool.category)).sort(), []);
-  const filtered = useMemo(() => tools.filter((tool) => matches(tool, query, status, stage)), [query, status, stage]);
+  const itemTypes = useMemo(() => unique(tools.map((tool) => getToolMeta(tool).itemType)).sort(), []);
+  const levels = useMemo(() => unique(tools.map((tool) => getToolMeta(tool).learningLevel)).sort(), []);
+  const filtered = useMemo(() => tools.filter((tool) => matches(tool, query, status, stage, itemType, level)), [query, status, stage, itemType, level]);
   const selected = tools.find((tool) => tool.id === selectedId) ?? filtered[0] ?? tools[0];
+  const selectedMeta = getToolMeta(selected);
 
   return (
     <main className="appShell">
@@ -126,6 +157,30 @@ export function App() {
             ))}
           </select>
         </label>
+        <label className="selectBox">
+          <Filter size={18} />
+          <span>{t.type}</span>
+          <select value={itemType} onChange={(event) => setItemType(event.target.value)}>
+            <option value="all">{t.all}</option>
+            {itemTypes.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="selectBox">
+          <Filter size={18} />
+          <span>{t.level}</span>
+          <select value={level} onChange={(event) => setLevel(event.target.value)}>
+            <option value="all">{t.all}</option>
+            {levels.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
       </section>
 
       <section className="layoutGrid">
@@ -145,8 +200,9 @@ export function App() {
               >
                 <span className="toolName">{tool.name}</span>
                 <span className={`statusBadge ${statusClass[tool.status]}`}>{tool.status}</span>
+                <span className="typeBadge">{getToolMeta(tool).itemType}</span>
                 <span className="toolMeta">
-                  {tool.stage} · {tool.course}
+                  {getToolMeta(tool).role} · {tool.course}
                 </span>
               </button>
             ))}
@@ -159,6 +215,8 @@ export function App() {
               <h2>{selected.name}</h2>
               <div className="detailMeta">
                 <span className={`statusBadge ${statusClass[selected.status]}`}>{selected.status}</span>
+                <span className="typeBadge">{selectedMeta.itemType}</span>
+                <span className="typeBadge">{selectedMeta.learningLevel}</span>
                 <span>{selected.category}</span>
                 <span>{selected.stage}</span>
               </div>
@@ -173,6 +231,22 @@ export function App() {
           <p className="summary">{selected[language].summary}</p>
 
           <div className="infoGrid">
+            <article>
+              <h3>{t.role}</h3>
+              <p>{selectedMeta.role}</p>
+            </article>
+            <article>
+              <h3>{t.abstraction}</h3>
+              <p>{selectedMeta.abstractionLevel}</p>
+            </article>
+            <article>
+              <h3>{t.stack}</h3>
+              <p>{selectedMeta.stack}</p>
+            </article>
+            <article>
+              <h3>{t.learnerNote}</h3>
+              <p>{selectedMeta.learnerNote[language]}</p>
+            </article>
             <article>
               <h3>{t.useWhen}</h3>
               <p>{selected[language].useWhen}</p>

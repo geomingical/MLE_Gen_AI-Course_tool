@@ -30,6 +30,20 @@ Label policy:
 - `Course-covered`: explicitly appears in course READMEs, lectures, homework, or code.
 - `Supplemental`: not covered or only lightly mentioned, but common in current GenAI/MLE workflows.
 
+## Learner Taxonomy / 學習者分類標籤
+
+The interactive site also labels each item by learning layer:
+
+| Label | 中文說明 | English explanation |
+| --- | --- | --- |
+| `Type` | 這個 item 是 package、library、framework、runtime、service、protocol、plugin、method、pattern，還是 workflow stack。 | Whether the item is a package, library, framework, runtime, service, protocol, plugin, method, pattern, or workflow stack. |
+| `Role` | 它在 pipeline 中做哪一步，例如 fetch、parse、extract、clean、retrieve、rank、serve。 | What it does in the pipeline, such as fetch, parse, extract, clean, retrieve, rank, or serve. |
+| `Abstraction level` | 它是單一工具、系統層、整合層、方法，還是一組工具 stack。 | Whether it is a single tool, system layer, integration layer, method, or tool stack. |
+| `Learning level` | 初學者、中階、進階。 | Beginner, intermediate, or advanced. |
+| `Stack` | 它通常屬於哪條 workflow。 | The workflow it usually belongs to. |
+
+Example: `requests`, `BeautifulSoup`, and `Trafilatura` can be used together, but they are not the same kind of item. `requests` fetches HTML, `BeautifulSoup` parses HTML structure, and `Trafilatura` extracts main article text.
+
 ## Navigation / 導覽
 
 - [Pipeline matrix / 技術流矩陣](pipeline.md)

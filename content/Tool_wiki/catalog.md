@@ -12,11 +12,24 @@
 | Hugging Face Hub | Model registry | Course-covered | Class2 model download/login | [huggingface-hub](tools/huggingface-hub.md) |
 | PyTorch and accelerate | Runtime | Course-covered | Class2 inference environment | [pytorch-accelerate](tools/pytorch-accelerate.md) |
 | vLLM | LLM serving | Course-covered | Class2 serving, Class4 compatible endpoint | [vllm](tools/vllm.md) |
+| requests | HTTP client package | Course-covered | Class2/Class3 web extraction fetch layer | [web-scraping](tools/web-scraping.md) |
+| BeautifulSoup | HTML parser library | Course-covered | Class2/Class3 web extraction parse layer | [web-scraping](tools/web-scraping.md) |
+| Trafilatura | Content extraction library | Course-covered | Class2/Class3 web extraction main-text layer | [web-scraping](tools/web-scraping.md) |
 | requests, BeautifulSoup, Trafilatura | Web extraction | Course-covered | Class3, Class2 HW output | [web-scraping](tools/web-scraping.md) |
+| Tesseract OCR | OCR engine/runtime | Course-covered | Class2/Class3 OCR engine layer | [ocr-tools](tools/ocr-tools.md) |
+| pytesseract | Python OCR wrapper package | Course-covered | Class2/Class3 Python wrapper around Tesseract | [ocr-tools](tools/ocr-tools.md) |
+| Surya | Layout-aware OCR/document extraction library | Course-covered | Class2/Class3 layout-aware OCR extension | [ocr-tools](tools/ocr-tools.md) |
 | Tesseract, pytesseract, Surya | OCR | Course-covered | Class3, Class2 HW OCR | [ocr-tools](tools/ocr-tools.md) |
 | Whisper, faster-whisper | ASR | Course-covered | Class3 voice agent, Class2 HW ASR | [audio-asr](tools/audio-asr.md) |
+| pandas | Dataframe library | Course-covered | Class2/Class3 cleaning inspection and reporting | [cleaning-dedup](tools/cleaning-dedup.md) |
+| regex / regular expressions | Cleaning method | Course-covered | Class2/Class3 rule-based cleaning | [cleaning-dedup](tools/cleaning-dedup.md) |
+| langdetect | Language detection package | Course-covered | Class2/Class3 language filtering | [cleaning-dedup](tools/cleaning-dedup.md) |
+| spaCy | NLP preprocessing library | Course-covered | Class2/Class3 NLP preprocessing | [cleaning-dedup](tools/cleaning-dedup.md) |
+| datasketch / MinHash | Deduplication package/method | Course-covered | Class2/Class3 near-duplicate detection | [cleaning-dedup](tools/cleaning-dedup.md) |
 | pandas, regex, langdetect, spaCy, datasketch | Cleaning/dedup | Course-covered | Class3 cleaning, Class2 HW cleaning | [cleaning-dedup](tools/cleaning-dedup.md) |
 | FastAPI | Serving | Course-covered | Class3 voice agent code | [fastapi](tools/fastapi.md) |
+| sentence-transformers | Local embedding library | Course-covered | Class4 local embedding generation | [embeddings](tools/embeddings.md) |
+| OpenAI embeddings | Hosted embedding API/service | Course-covered | Class4 OpenAI embedding generation | [embeddings](tools/embeddings.md) |
 | sentence-transformers and OpenAI embeddings | Embeddings | Course-covered | Class4 RAG | [embeddings](tools/embeddings.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
@@ -45,11 +58,24 @@
 | Hugging Face Hub | Model registry | Course-covered | Class2 model download/login | [huggingface-hub](tools/huggingface-hub.md) |
 | PyTorch and accelerate | Runtime | Course-covered | Class2 inference environment | [pytorch-accelerate](tools/pytorch-accelerate.md) |
 | vLLM | LLM serving | Course-covered | Class2 serving, Class4 compatible endpoint | [vllm](tools/vllm.md) |
+| requests | HTTP client package | Course-covered | Class2/Class3 web extraction fetch layer | [web-scraping](tools/web-scraping.md) |
+| BeautifulSoup | HTML parser library | Course-covered | Class2/Class3 web extraction parse layer | [web-scraping](tools/web-scraping.md) |
+| Trafilatura | Content extraction library | Course-covered | Class2/Class3 web extraction main-text layer | [web-scraping](tools/web-scraping.md) |
 | requests, BeautifulSoup, Trafilatura | Web extraction | Course-covered | Class3, Class2 HW output | [web-scraping](tools/web-scraping.md) |
+| Tesseract OCR | OCR engine/runtime | Course-covered | Class2/Class3 OCR engine layer | [ocr-tools](tools/ocr-tools.md) |
+| pytesseract | Python OCR wrapper package | Course-covered | Class2/Class3 Python wrapper around Tesseract | [ocr-tools](tools/ocr-tools.md) |
+| Surya | Layout-aware OCR/document extraction library | Course-covered | Class2/Class3 layout-aware OCR extension | [ocr-tools](tools/ocr-tools.md) |
 | Tesseract, pytesseract, Surya | OCR | Course-covered | Class3, Class2 HW OCR | [ocr-tools](tools/ocr-tools.md) |
 | Whisper, faster-whisper | ASR | Course-covered | Class3 voice agent, Class2 HW ASR | [audio-asr](tools/audio-asr.md) |
+| pandas | Dataframe library | Course-covered | Class2/Class3 cleaning inspection and reporting | [cleaning-dedup](tools/cleaning-dedup.md) |
+| regex / regular expressions | Cleaning method | Course-covered | Class2/Class3 rule-based cleaning | [cleaning-dedup](tools/cleaning-dedup.md) |
+| langdetect | Language detection package | Course-covered | Class2/Class3 language filtering | [cleaning-dedup](tools/cleaning-dedup.md) |
+| spaCy | NLP preprocessing library | Course-covered | Class2/Class3 NLP preprocessing | [cleaning-dedup](tools/cleaning-dedup.md) |
+| datasketch / MinHash | Deduplication package/method | Course-covered | Class2/Class3 near-duplicate detection | [cleaning-dedup](tools/cleaning-dedup.md) |
 | pandas, regex, langdetect, spaCy, datasketch | Cleaning/dedup | Course-covered | Class3 cleaning, Class2 HW cleaning | [cleaning-dedup](tools/cleaning-dedup.md) |
 | FastAPI | Serving | Course-covered | Class3 voice agent code | [fastapi](tools/fastapi.md) |
+| sentence-transformers | Local embedding library | Course-covered | Class4 local embedding generation | [embeddings](tools/embeddings.md) |
+| OpenAI embeddings | Hosted embedding API/service | Course-covered | Class4 OpenAI embedding generation | [embeddings](tools/embeddings.md) |
 | sentence-transformers and OpenAI embeddings | Embeddings | Course-covered | Class4 RAG | [embeddings](tools/embeddings.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
