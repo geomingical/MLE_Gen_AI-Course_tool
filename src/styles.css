@@ -1,0 +1,385 @@
+:root {
+  color: #17212b;
+  background: #f6f7f4;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f6f7f4;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.appShell {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.topBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 0 20px;
+  border-bottom: 1px solid #d8ded5;
+}
+
+.eyebrow {
+  color: #5a6b61;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.topBar p {
+  max-width: 780px;
+  margin-bottom: 0;
+  color: #40505b;
+  line-height: 1.6;
+}
+
+.languageButton,
+.sourceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid #bfc9c0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1c2d35;
+  padding: 9px 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.controlBand {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 18px 0;
+}
+
+.searchBox,
+.selectBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid #cfd7ce;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0 12px;
+}
+
+.searchBox input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+}
+
+.selectBox span {
+  color: #53616a;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.selectBox select {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #17212b;
+}
+
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.catalogPane,
+.detailPane,
+.overviewPanel {
+  border: 1px solid #d5ddd2;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.catalogPane {
+  min-height: 680px;
+  max-height: 78vh;
+  overflow: hidden;
+}
+
+.paneHeader,
+.detailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid #e2e7df;
+}
+
+.paneHeader h2,
+.detailHeader h2 {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.paneHeader span {
+  color: #617074;
+  font-size: 13px;
+}
+
+.toolList {
+  max-height: calc(78vh - 58px);
+  overflow: auto;
+  padding: 8px;
+}
+
+.toolRow {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  padding: 11px;
+  text-align: left;
+}
+
+.toolRow:hover,
+.toolRow.active {
+  border-color: #adc8be;
+  background: #eef5f1;
+}
+
+.toolName {
+  font-weight: 750;
+}
+
+.toolMeta {
+  color: #66757b;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.statusBadge {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.statusCourse {
+  background: #d8ece3;
+  color: #245a45;
+}
+
+.statusSupplemental {
+  background: #edf0d4;
+  color: #5a5d26;
+}
+
+.statusExtension {
+  background: #e2e4ee;
+  color: #384461;
+}
+
+.detailPane {
+  min-height: 680px;
+  padding-bottom: 18px;
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  color: #617074;
+  font-size: 13px;
+}
+
+.summary {
+  margin: 18px 18px 0;
+  color: #20313a;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+
+.infoGrid article,
+.tagsBlock {
+  border: 1px solid #e0e6dd;
+  border-radius: 8px;
+  background: #fbfcfa;
+  padding: 14px;
+}
+
+.infoGrid h3,
+.tagsBlock h3,
+.overviewPanel h2 {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.infoGrid p {
+  margin-bottom: 0;
+  color: #47565e;
+  line-height: 1.55;
+}
+
+.tagsBlock {
+  margin: 0 18px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tags button {
+  border: 1px solid #cfd8d0;
+  border-radius: 999px;
+  background: #fff;
+  padding: 6px 10px;
+  color: #31434b;
+}
+
+.overviewGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.overviewPanel {
+  padding: 16px;
+}
+
+.pipelineList {
+  display: grid;
+  gap: 10px;
+}
+
+.pipelineItem {
+  border-left: 3px solid #739987;
+  padding-left: 10px;
+}
+
+.pipelineItem strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.pipelineItem p {
+  margin-bottom: 0;
+  color: #4a5a60;
+  line-height: 1.5;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.categoryGrid button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #d8dfd5;
+  border-radius: 8px;
+  background: #fbfcfa;
+  padding: 10px;
+  text-align: left;
+}
+
+footer {
+  padding: 22px 0 4px;
+  color: #66747b;
+  font-size: 13px;
+}
+
+@media (max-width: 980px) {
+  .appShell {
+    padding: 18px;
+  }
+
+  .topBar,
+  .controlBand,
+  .layoutGrid,
+  .overviewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topBar {
+    display: grid;
+  }
+
+  .controlBand {
+    display: grid;
+  }
+
+  .catalogPane,
+  .detailPane {
+    min-height: auto;
+    max-height: none;
+  }
+
+  .toolList {
+    max-height: 420px;
+  }
+
+  .infoGrid,
+  .categoryGrid {
+    grid-template-columns: 1fr;
+  }
+}
