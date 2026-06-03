@@ -35,12 +35,3 @@ Each item is labeled by:
 
 The original markdown reference lives under `content/Tool_wiki/`. The interactive site uses structured data in `src/data/tools.ts` for search, filters, and detail panels.
 
-## Maintainer Notes
-
-The site is built with Vite, React, and TypeScript. For local edits:
-
-```bash
-npm install
-npm run dev
-npm run build
-```
