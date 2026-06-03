@@ -265,7 +265,8 @@ h1 {
 }
 
 .infoGrid article,
-.tagsBlock {
+.tagsBlock,
+.learnerGuide {
   border: 1px solid #e0e6dd;
   border-radius: 8px;
   background: #fbfcfa;
@@ -274,14 +275,92 @@ h1 {
 
 .infoGrid h3,
 .tagsBlock h3,
+.learnerGuide h3,
 .overviewPanel h2 {
   margin-bottom: 8px;
   font-size: 15px;
 }
 
-.infoGrid p {
+.infoGrid p,
+.guideGrid p {
   margin-bottom: 0;
   color: #47565e;
+  line-height: 1.55;
+}
+
+.learnerGuide {
+  margin: 0 18px 18px;
+  background: #f9fbf7;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sectionHeader h3 {
+  margin: 0;
+}
+
+.sectionHeader span {
+  border: 1px solid #c8d5cf;
+  border-radius: 999px;
+  background: #fff;
+  color: #51625b;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.guideGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.guideGrid article {
+  border: 1px solid #e1e8df;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 12px;
+}
+
+.guideGrid h4,
+.compareBlock h4,
+.codeBlock h4 {
+  margin: 0 0 7px;
+  color: #263943;
+  font-size: 14px;
+}
+
+.compareBlock {
+  margin-top: 12px;
+}
+
+.codeBlock {
+  margin-top: 12px;
+  border: 1px solid #d8e1dd;
+  border-radius: 8px;
+  background: #111b20;
+  padding: 12px;
+}
+
+.codeBlock h4 {
+  color: #dce7e2;
+}
+
+.codeBlock pre {
+  margin: 0;
+  overflow: auto;
+}
+
+.codeBlock code {
+  color: #eef6f2;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
   line-height: 1.55;
 }
 
@@ -390,6 +469,7 @@ footer {
   }
 
   .infoGrid,
+  .guideGrid,
   .categoryGrid {
     grid-template-columns: 1fr;
   }

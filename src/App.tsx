@@ -1,6 +1,6 @@
 import { BookOpen, ExternalLink, Filter, Globe2, Search, Workflow } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Language, Tool, ToolStatus, getToolMeta, pipelineHighlights, stages, statusOrder, tools } from "./data/tools";
+import { Language, Tool, ToolStatus, getLearnerGuide, getToolMeta, pipelineHighlights, stages, statusOrder, tools } from "./data/tools";
 
 const labels = {
   zh: {
@@ -23,6 +23,13 @@ const labels = {
     abstraction: "層級",
     stack: "所屬 stack",
     learnerNote: "學習者提示",
+    learnerGuide: "學習路徑",
+    before: "先具備 / 前一步",
+    after: "下一步",
+    commonConfusion: "常見混淆",
+    firstExercise: "第一個練習",
+    compareWith: "比較對象",
+    codeExample: "Python 案例",
     tags: "標籤",
     markdown: "Markdown 原文",
     count: "個項目",
@@ -48,6 +55,13 @@ const labels = {
     abstraction: "Abstraction level",
     stack: "Stack",
     learnerNote: "Learner note",
+    learnerGuide: "Learning path",
+    before: "Before / previous step",
+    after: "Next step",
+    commonConfusion: "Common confusion",
+    firstExercise: "First exercise",
+    compareWith: "Compare with",
+    codeExample: "Python example",
     tags: "Tags",
     markdown: "Markdown source",
     count: "items",
@@ -67,6 +81,7 @@ function unique<T>(items: T[]): T[] {
 
 function matches(tool: Tool, query: string, status: string, stage: string, itemType: string, level: string): boolean {
   const meta = getToolMeta(tool);
+  const guide = getLearnerGuide(tool);
   const q = query.trim().toLowerCase();
   const haystack = [
     tool.name,
@@ -81,6 +96,15 @@ function matches(tool: Tool, query: string, status: string, stage: string, itemT
     meta.stack,
     meta.learnerNote.zh,
     meta.learnerNote.en,
+    guide?.before.zh,
+    guide?.before.en,
+    guide?.after.zh,
+    guide?.after.en,
+    guide?.commonConfusion.zh,
+    guide?.commonConfusion.en,
+    guide?.firstExercise.zh,
+    guide?.firstExercise.en,
+    ...(guide?.compareWith ?? []),
     ...tool.tags,
     tool.zh.summary,
     tool.en.summary,
@@ -113,6 +137,7 @@ export function App() {
   const filtered = useMemo(() => tools.filter((tool) => matches(tool, query, status, stage, itemType, level)), [query, status, stage, itemType, level]);
   const selected = tools.find((tool) => tool.id === selectedId) ?? filtered[0] ?? tools[0];
   const selectedMeta = getToolMeta(selected);
+  const selectedGuide = getLearnerGuide(selected);
 
   return (
     <main className="appShell">
@@ -264,6 +289,53 @@ export function App() {
               <p>{selected.course}</p>
             </article>
           </div>
+
+          {selectedGuide && (
+            <section className="learnerGuide">
+              <div className="sectionHeader">
+                <h3>{t.learnerGuide}</h3>
+                <span>{selectedMeta.learningLevel}</span>
+              </div>
+              <div className="guideGrid">
+                <article>
+                  <h4>{t.before}</h4>
+                  <p>{selectedGuide.before[language]}</p>
+                </article>
+                <article>
+                  <h4>{t.after}</h4>
+                  <p>{selectedGuide.after[language]}</p>
+                </article>
+                <article>
+                  <h4>{t.commonConfusion}</h4>
+                  <p>{selectedGuide.commonConfusion[language]}</p>
+                </article>
+                <article>
+                  <h4>{t.firstExercise}</h4>
+                  <p>{selectedGuide.firstExercise[language]}</p>
+                </article>
+              </div>
+              <div className="compareBlock">
+                <h4>{t.compareWith}</h4>
+                <div className="tags">
+                  {selectedGuide.compareWith.map((item) => (
+                    <button key={item} onClick={() => setQuery(item)}>
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {selectedGuide.codeExample && (
+                <div className="codeBlock">
+                  <h4>
+                    {t.codeExample}: {selectedGuide.codeExample.title[language]}
+                  </h4>
+                  <pre>
+                    <code>{selectedGuide.codeExample.code}</code>
+                  </pre>
+                </div>
+              )}
+            </section>
+          )}
 
           <div className="tagsBlock">
             <h3>{t.tags}</h3>

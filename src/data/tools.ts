@@ -60,6 +60,24 @@ export type ToolMeta = {
   };
 };
 
+export type BilingualText = {
+  zh: string;
+  en: string;
+};
+
+export type LearnerGuide = {
+  before: BilingualText;
+  after: BilingualText;
+  commonConfusion: BilingualText;
+  firstExercise: BilingualText;
+  compareWith: string[];
+  codeExample?: {
+    language: string;
+    title: BilingualText;
+    code: string;
+  };
+};
+
 export function getToolMeta(tool: Tool): ToolMeta {
   return {
     itemType: tool.itemType ?? inferItemType(tool),
@@ -72,6 +90,10 @@ export function getToolMeta(tool: Tool): ToolMeta {
       en: "This item's level is inferred from its category; if it feels confusing, start with Type and Role.",
     },
   };
+}
+
+export function getLearnerGuide(tool: Tool): LearnerGuide | undefined {
+  return learnerGuides[tool.id];
 }
 
 function inferItemType(tool: Tool): ItemType {
@@ -112,6 +134,421 @@ function inferLearningLevel(tool: Tool): LearningLevel {
   if (tool.status === "Supplemental") return "Intermediate";
   return "Beginner";
 }
+
+const learnerGuides: Record<string, LearnerGuide> = {
+  requests: {
+    before: {
+      zh: "先確認 URL 是否直接回傳 HTML/JSON/PDF。若瀏覽器看到內容，但 `requests` 抓不到，通常代表需要登入、header、cookie 或 JavaScript rendering。",
+      en: "First check whether the URL directly returns HTML, JSON, or a PDF. If the browser shows content but `requests` does not, login, headers, cookies, or JavaScript rendering may be required.",
+    },
+    after: {
+      zh: "把 response 交給 BeautifulSoup 解析 HTML，或交給 Trafilatura 抽正文；如果是 JSON，先用 `response.json()` 檢查欄位。",
+      en: "Pass the response to BeautifulSoup for HTML parsing or Trafilatura for main-text extraction. For JSON, inspect fields with `response.json()`.",
+    },
+    commonConfusion: {
+      zh: "`requests` 不是爬蟲框架，也不是 HTML parser。它只處理 HTTP request/response 這一層。",
+      en: "`requests` is neither a crawler framework nor an HTML parser. It only handles the HTTP request/response layer.",
+    },
+    firstExercise: {
+      zh: "抓一個靜態文章頁，印出 HTTP status、content-type、前 500 個字元，確認你拿到的是原始 HTML 而不是錯誤頁。",
+      en: "Fetch a static article page, print status code, content type, and the first 500 characters to confirm you got raw HTML rather than an error page.",
+    },
+    compareWith: ["BeautifulSoup", "Trafilatura", "Playwright", "Scrapy"],
+    codeExample: {
+      language: "python",
+      title: {
+        zh: "最小下載檢查",
+        en: "Minimal fetch check",
+      },
+      code: `import requests
+
+url = "https://example.com"
+response = requests.get(url, timeout=10)
+response.raise_for_status()
+
+print(response.status_code)
+print(response.headers.get("content-type"))
+print(response.text[:500])`,
+    },
+  },
+  beautifulsoup: {
+    before: {
+      zh: "先用 `requests`、本地 HTML 檔或瀏覽器取得 HTML 字串。BeautifulSoup 的輸入通常是一段 HTML，不是 URL。",
+      en: "First obtain an HTML string through `requests`, a local HTML file, or a browser. BeautifulSoup usually receives HTML, not a URL.",
+    },
+    after: {
+      zh: "抽出 title、links、table 或特定 div/span 後，把結果整理成 dataframe 或 metadata-rich records，再進 cleaning。",
+      en: "After extracting titles, links, tables, or specific div/span fields, organize results as dataframes or metadata-rich records before cleaning.",
+    },
+    commonConfusion: {
+      zh: "BeautifulSoup 不會自動知道哪段是文章正文；它擅長結構解析，但主文抽取通常 Trafilatura 更省力。",
+      en: "BeautifulSoup does not automatically know which part is the main article. It parses structure well, while Trafilatura is usually easier for main-text extraction.",
+    },
+    firstExercise: {
+      zh: "從一頁 HTML 抽出所有 `<a>` 的文字與 href，觀察 selector 如何決定你取得哪些資料。",
+      en: "Extract all `<a>` texts and hrefs from one HTML page and observe how selectors determine what data you get.",
+    },
+    compareWith: ["requests", "Trafilatura", "lxml", "Playwright"],
+    codeExample: {
+      language: "python",
+      title: {
+        zh: "抽取連結",
+        en: "Extract links",
+      },
+      code: `from bs4 import BeautifulSoup
+import requests
+
+html = requests.get("https://example.com", timeout=10).text
+soup = BeautifulSoup(html, "html.parser")
+
+for link in soup.find_all("a"):
+    print(link.get_text(strip=True), link.get("href"))`,
+    },
+  },
+  trafilatura: {
+    before: {
+      zh: "先取得 HTML 或 URL，並確認頁面是文章、blog、docs 這類有主要正文的頁面。",
+      en: "First obtain HTML or a URL, and confirm the page is article-like, such as a blog, documentation page, or news article.",
+    },
+    after: {
+      zh: "把抽出的正文與 URL/title/date 一起保存，接著做語言偵測、去重、chunking，再進 embedding/RAG。",
+      en: "Store extracted text with URL/title/date, then run language detection, deduplication, chunking, and embedding/RAG.",
+    },
+    commonConfusion: {
+      zh: "Trafilatura 不是萬能 parser。它適合抽正文，不適合精準抓表格欄位、互動內容或站台導覽結構。",
+      en: "Trafilatura is not a universal parser. It is good for main text, not precise table fields, interactive content, or site navigation structure.",
+    },
+    firstExercise: {
+      zh: "同一頁文章分別用 BeautifulSoup 的 `soup.get_text()` 和 Trafilatura 抽文字，比較雜訊、導覽列和廣告文字差異。",
+      en: "Run both BeautifulSoup `soup.get_text()` and Trafilatura on the same article, then compare noise, navigation text, and ad text.",
+    },
+    compareWith: ["BeautifulSoup", "Unstructured", "Docling", "Crawl4AI"],
+    codeExample: {
+      language: "python",
+      title: {
+        zh: "抽主要正文",
+        en: "Extract main text",
+      },
+      code: `import trafilatura
+
+url = "https://example.com"
+downloaded = trafilatura.fetch_url(url)
+text = trafilatura.extract(downloaded, include_comments=False)
+
+print(text)`,
+    },
+  },
+  "web-scraping": {
+    before: {
+      zh: "先判斷資料來源是靜態 HTML、API、動態網頁，還是需要登入的網站。不同來源決定 stack 起點。",
+      en: "First classify the source as static HTML, API, dynamic page, or login-protected site. The source type determines the starting tool.",
+    },
+    after: {
+      zh: "完成抽取後，要進 cleaning/dedup，並保留 URL、抓取時間、標題與抽取失敗案例。",
+      en: "After extraction, move to cleaning/dedup and preserve URL, crawl time, title, and failed extraction samples.",
+    },
+    commonConfusion: {
+      zh: "這三個不是同層替代：`requests` 下載，BeautifulSoup 解析 DOM，Trafilatura 抽正文。",
+      en: "These three are not same-level alternatives: `requests` fetches, BeautifulSoup parses the DOM, and Trafilatura extracts main text.",
+    },
+    firstExercise: {
+      zh: "對同一個 URL 建三欄結果：HTTP status、DOM title、Trafilatura main text 長度，理解每層輸出差異。",
+      en: "For one URL, create three outputs: HTTP status, DOM title, and Trafilatura main-text length to understand each layer's output.",
+    },
+    compareWith: ["Playwright", "Scrapy", "Crawl4AI", "Unstructured"],
+  },
+  tesseract: {
+    before: {
+      zh: "先確認文件真的沒有文字層，且輸入圖片解析度、方向、對比足夠。OCR 前的影像品質常比模型選擇更重要。",
+      en: "First confirm the document truly lacks a text layer and that image resolution, orientation, and contrast are sufficient. Image quality often matters more than model choice.",
+    },
+    after: {
+      zh: "把 OCR 結果抽樣檢查，再做清理、段落合併、語言偵測與錯字/斷行修正。",
+      en: "Sample-check OCR output, then clean it, merge paragraphs, detect language, and fix line-break or recognition artifacts.",
+    },
+    commonConfusion: {
+      zh: "Tesseract 是 OCR engine，不是 Python package。Python 裡常透過 pytesseract 呼叫它。",
+      en: "Tesseract is an OCR engine, not a Python package. Python pipelines often call it through pytesseract.",
+    },
+    firstExercise: {
+      zh: "用一張清楚文字圖片跑 OCR，再故意旋轉或降低解析度，比較輸出錯誤如何增加。",
+      en: "Run OCR on a clear text image, then rotate it or reduce resolution and compare how errors increase.",
+    },
+    compareWith: ["pytesseract", "Surya", "Docling", "MinerU"],
+  },
+  pytesseract: {
+    before: {
+      zh: "先安裝並測試 Tesseract binary；再安裝 pytesseract。只裝 Python package 通常不夠。",
+      en: "Install and test the Tesseract binary first, then install pytesseract. Installing only the Python package is usually not enough.",
+    },
+    after: {
+      zh: "把 OCR wrapper 放進批次 pipeline，例如逐頁讀圖片、辨識、保存頁碼與 confidence/錯誤樣本。",
+      en: "Place the OCR wrapper in a batch pipeline, such as page-by-page image loading, recognition, and saving page numbers plus confidence/error samples.",
+    },
+    commonConfusion: {
+      zh: "pytesseract 不是新的 OCR 模型；它只是把 Python 程式接到 Tesseract engine。",
+      en: "pytesseract is not a new OCR model. It only connects Python code to the Tesseract engine.",
+    },
+    firstExercise: {
+      zh: "在 notebook 中讀一張圖片並呼叫 `image_to_string`，確認錯誤發生在 Python wrapper 還是系統 OCR binary。",
+      en: "Load one image in a notebook and call `image_to_string` to identify whether errors come from the Python wrapper or the system OCR binary.",
+    },
+    compareWith: ["Tesseract OCR", "Surya", "Pillow", "OpenCV"],
+    codeExample: {
+      language: "python",
+      title: {
+        zh: "Python 呼叫 OCR",
+        en: "Call OCR from Python",
+      },
+      code: `from PIL import Image
+import pytesseract
+
+image = Image.open("page.png")
+text = pytesseract.image_to_string(image, lang="eng")
+
+print(text[:1000])`,
+    },
+  },
+  surya: {
+    before: {
+      zh: "先確認問題是否是版面與閱讀順序，而不只是單張圖片文字辨識。Surya 的價值在 layout-aware extraction。",
+      en: "First check whether the problem is layout and reading order, not just text recognition from one image. Surya's value is layout-aware extraction.",
+    },
+    after: {
+      zh: "把抽出的 blocks/lines 依頁碼與區塊保存，對表格、圖說、公式另做錯誤標記。",
+      en: "Store extracted blocks/lines by page and region, and separately mark errors around tables, captions, and formulas.",
+    },
+    commonConfusion: {
+      zh: "Surya 不只是 Tesseract 的替代品；它更偏文件解析，適合多欄與複雜版面。",
+      en: "Surya is not merely a Tesseract replacement. It is closer to document parsing and fits multi-column or complex layouts.",
+    },
+    firstExercise: {
+      zh: "選一頁雙欄 PDF 截圖，對比 Tesseract 與 Surya 的閱讀順序是否合理。",
+      en: "Use a two-column PDF page screenshot and compare whether Tesseract and Surya preserve reading order.",
+    },
+    compareWith: ["Tesseract OCR", "pytesseract", "MinerU", "Docling"],
+  },
+  regex: {
+    before: {
+      zh: "先抽樣看原始文字，列出明確、可測的 noise pattern。不要在沒看資料前寫大規模清理規則。",
+      en: "Inspect raw text samples first and list explicit, testable noise patterns. Do not write large cleanup rules before looking at the data.",
+    },
+    after: {
+      zh: "每條規則都要輸出命中數、刪除比例與範例，接著用人工抽樣確認沒有誤刪重要內容。",
+      en: "For each rule, output hit count, removal rate, and examples, then manually sample-check that important content was not removed.",
+    },
+    commonConfusion: {
+      zh: "regex 是規則方法，不是資料品質保證。它很適合清楚 pattern，但不適合模糊語意判斷。",
+      en: "Regex is a rule method, not a data-quality guarantee. It works well for clear patterns, not fuzzy semantic decisions.",
+    },
+    firstExercise: {
+      zh: "寫一條 email 移除規則，列出被移除的前 20 個 match，確認它沒有刪到正常句子。",
+      en: "Write one email-removal rule, list the first 20 removed matches, and confirm it did not delete normal sentences.",
+    },
+    compareWith: ["pandas", "spaCy", "PII detectors", "LLM-based cleaning"],
+    codeExample: {
+      language: "python",
+      title: {
+        zh: "規則清理前先看命中",
+        en: "Inspect matches before cleaning",
+      },
+      code: `import re
+
+texts = ["Contact me at a@example.com", "No email here"]
+pattern = re.compile(r"\\b[\\w.-]+@[\\w.-]+\\.\\w+\\b")
+
+for text in texts:
+    print(pattern.findall(text))
+    print(pattern.sub("[EMAIL]", text))`,
+    },
+  },
+  datasketch: {
+    before: {
+      zh: "先定義「重複」對你的任務代表什麼：整篇相同、段落相似、模板頁相似，還是 OCR 重複。",
+      en: "First define what duplicate means for your task: same document, similar paragraph, template-like page, or OCR repetition.",
+    },
+    after: {
+      zh: "用樣本校準 threshold，保存被刪與保留的 pairs，避免把重要近似內容誤刪。",
+      en: "Calibrate thresholds with samples and preserve removed/kept pairs to avoid deleting important near-similar content.",
+    },
+    commonConfusion: {
+      zh: "datasketch 是 package；MinHash/Jaccard 是方法。它找近似重複，不會判斷內容是否正確。",
+      en: "datasketch is the package; MinHash/Jaccard is the method. It finds near-duplicates, not factual correctness.",
+    },
+    firstExercise: {
+      zh: "建立三段文字：完全相同、只改幾個字、完全不同，觀察 Jaccard/MinHash similarity 如何變化。",
+      en: "Create three texts: identical, slightly changed, and totally different. Observe how Jaccard/MinHash similarity changes.",
+    },
+    compareWith: ["regex", "pandas duplicate checks", "SimHash", "embedding similarity"],
+  },
+  "sentence-transformers": {
+    before: {
+      zh: "先準備乾淨 chunks，並決定語言、模型、向量維度與硬體。embedding 不能修復爛 chunk。",
+      en: "Prepare clean chunks first, then decide language, model, vector dimension, and hardware. Embeddings cannot fix bad chunks.",
+    },
+    after: {
+      zh: "把 vectors 放進 FAISS/vector DB，保存 chunk text、metadata、model name、dimension，方便重建 index。",
+      en: "Store vectors in FAISS/vector DB and preserve chunk text, metadata, model name, and dimension for index rebuilds.",
+    },
+    commonConfusion: {
+      zh: "它是本地 embedding library，不是 vector database。它產生向量；FAISS/Qdrant 等負責搜尋向量。",
+      en: "It is a local embedding library, not a vector database. It creates vectors; FAISS/Qdrant and similar tools search vectors.",
+    },
+    firstExercise: {
+      zh: "對三句相似/不相似句子產生 embedding，計算 cosine similarity，理解向量相似度的直覺。",
+      en: "Embed three similar/dissimilar sentences and compute cosine similarity to build intuition for vector similarity.",
+    },
+    compareWith: ["OpenAI embeddings", "FAISS", "Vector databases", "BM25"],
+    codeExample: {
+      language: "python",
+      title: {
+        zh: "本地句向量",
+        en: "Local sentence embeddings",
+      },
+      code: `from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+texts = ["RAG retrieves context.", "Retrieval finds relevant text.", "I like coffee."]
+vectors = model.encode(texts)
+
+print(cosine_similarity([vectors[0]], vectors[1:]))`,
+    },
+  },
+  "openai-embeddings": {
+    before: {
+      zh: "先確認資料可否外送、成本預算、rate limit，以及要用哪個 embedding model/dimension。",
+      en: "First confirm whether data can be sent externally, budget, rate limits, and the embedding model/dimension to use.",
+    },
+    after: {
+      zh: "把 API 回傳 vectors 寫入 vector index，並在 metadata 記錄 model name、產生時間與 chunking rule。",
+      en: "Write returned vectors into a vector index and record model name, generation time, and chunking rule in metadata.",
+    },
+    commonConfusion: {
+      zh: "它是 hosted service，不是本地 library。好處是穩定省環境，代價是成本、rate limit 與資料治理。",
+      en: "It is a hosted service, not a local library. It reduces environment work but introduces cost, rate limits, and data-governance concerns.",
+    },
+    firstExercise: {
+      zh: "對 5 個短 chunks 呼叫 embeddings API，印出向量維度與 token/cost 記錄，理解 API 工作流。",
+      en: "Call the embeddings API on five short chunks, print vector dimension and token/cost notes, and understand the API workflow.",
+    },
+    compareWith: ["sentence-transformers", "FAISS", "LiteLLM", "Vector databases"],
+  },
+  "langchain-rag": {
+    before: {
+      zh: "先理解基本 RAG 四步：load documents、split chunks、embed/index、retrieve/generate。LangChain 只是把這些步驟串起來。",
+      en: "First understand the four basic RAG steps: load documents, split chunks, embed/index, and retrieve/generate. LangChain only composes these steps.",
+    },
+    after: {
+      zh: "加入 citation、retrieved chunk inspection、query set evaluation，再考慮 reranking、hybrid search 或 GraphRAG。",
+      en: "Add citations, retrieved-chunk inspection, and query-set evaluation before moving to reranking, hybrid search, or GraphRAG.",
+    },
+    commonConfusion: {
+      zh: "LangChain RetrievalQA 不是 RAG 品質保證；source text、chunking、embedding、retriever 任一層錯都會失敗。",
+      en: "LangChain RetrievalQA does not guarantee RAG quality. Failures can come from source text, chunking, embeddings, or the retriever.",
+    },
+    firstExercise: {
+      zh: "用 3 頁課程筆記做最小 RAG，對每個回答印出 retrieved chunks，而不是只看最終答案。",
+      en: "Build a minimal RAG over three course-note pages and print retrieved chunks for every answer, not only the final answer.",
+    },
+    compareWith: ["FAISS", "LlamaIndex", "Hybrid search and reranking", "RAG evaluation and observability"],
+  },
+  "tool-plugin-protocol-extensions": {
+    before: {
+      zh: "先判斷你是在做 model tool calling、host plugin，還是 MCP protocol integration。三者都能接工具，但層級不同。",
+      en: "First decide whether you are building model tool calling, a host plugin, or MCP protocol integration. All connect tools, but at different layers.",
+    },
+    after: {
+      zh: "為每個 tool 定義 input schema、權限、side effect、錯誤處理與日誌，再做最小 smoke test。",
+      en: "For each tool, define input schema, permissions, side effects, error handling, and logs, then run a minimal smoke test.",
+    },
+    commonConfusion: {
+      zh: "plugin 是某個 host 的擴充；MCP 是 client/server protocol；tool calling 是模型輸出一個可由程式執行的 tool request。",
+      en: "A plugin extends a host; MCP is a client/server protocol; tool calling is the model emitting a tool request that code can execute.",
+    },
+    firstExercise: {
+      zh: "做一個只讀工具：輸入檔名，回傳檔案前 20 行。先不要做會刪檔、寫資料或呼叫外部 API 的工具。",
+      en: "Build one read-only tool: input a filename and return the first 20 lines. Avoid delete/write/external-API tools at first.",
+    },
+    compareWith: ["LangChain tools", "MCP", "OpenAI tool calling", "Pydantic AI"],
+  },
+  "advanced-rag-patterns": {
+    before: {
+      zh: "先建立 baseline RAG，並知道失敗來自 chunking、retrieval、generation、citation 還是 latency。沒有 baseline 就很難判斷 advanced pattern 是否有效。",
+      en: "First build baseline RAG and identify whether failures come from chunking, retrieval, generation, citations, or latency. Without a baseline, advanced patterns are hard to judge.",
+    },
+    after: {
+      zh: "依失敗型態選 CAG、query decomposition、agentic retrieval 或 GraphRAG，並保持一次只改一個 component。",
+      en: "Choose CAG, query decomposition, agentic retrieval, or GraphRAG based on failure type, and change one component at a time.",
+    },
+    commonConfusion: {
+      zh: "Advanced RAG 不是越多越好。CAG、GraphRAG、agentic retrieval 解的是不同瓶頸。",
+      en: "Advanced RAG is not about adding more techniques. CAG, GraphRAG, and agentic retrieval solve different bottlenecks.",
+    },
+    firstExercise: {
+      zh: "拿同一組 10 個問題，記錄 baseline retrieved chunks，再只加入一個改動，例如 reranking，觀察錯誤是否真的下降。",
+      en: "Use the same 10 questions, record baseline retrieved chunks, then add one change such as reranking and check whether errors actually decrease.",
+    },
+    compareWith: ["Hybrid search and reranking", "Knowledge graphs and GraphRAG", "DCI-Agent-Lite", "RAG evaluation and observability"],
+  },
+  "retrieval-enhancement": {
+    before: {
+      zh: "先看 baseline retrieval 錯在哪：漏 exact keyword、專有名詞、數字、短 query，還是 top-k 太雜。",
+      en: "Inspect baseline retrieval failures first: missing exact keywords, entities, numbers, short queries, or noisy top-k.",
+    },
+    after: {
+      zh: "比較 dense-only、BM25-only、hybrid、rerank 後結果，並同時看 recall、citation correctness 與 latency。",
+      en: "Compare dense-only, BM25-only, hybrid, and reranked results by recall, citation correctness, and latency.",
+    },
+    commonConfusion: {
+      zh: "Hybrid search 是 dense vector + sparse keyword 的組合；reranking 是對候選結果重新排序。兩者可一起用，但不是同一件事。",
+      en: "Hybrid search combines dense vectors and sparse keyword search; reranking reorders candidates. They can be combined but are not the same thing.",
+    },
+    firstExercise: {
+      zh: "找一個 embedding search 漏掉專有名詞的 query，加入 BM25 或 reranker，看正確 chunk 是否進入 top-k。",
+      en: "Find one query where embedding search misses a proper noun, then add BM25 or a reranker and check whether the correct chunk enters top-k.",
+    },
+    compareWith: ["FAISS", "Vector databases", "Advanced RAG patterns", "RAG evaluation and observability"],
+  },
+  "knowledge-graphs-graphrag": {
+    before: {
+      zh: "先確認問題需要 entity/relationship 或跨文件 synthesis，而不是單純找最相關段落。",
+      en: "First confirm the question needs entity/relationship reasoning or cross-document synthesis, not just the most relevant passage.",
+    },
+    after: {
+      zh: "定義 schema、抽 entity/relationship、人工抽樣驗證，再把 graph retrieval 接回回答流程。",
+      en: "Define a schema, extract entities/relationships, manually validate samples, then connect graph retrieval back to answer generation.",
+    },
+    commonConfusion: {
+      zh: "Knowledge graph 不是 RAG 的自動升級。若 entity extraction 不可靠，GraphRAG 會把錯誤結構化並放大。",
+      en: "A knowledge graph is not an automatic RAG upgrade. If entity extraction is unreliable, GraphRAG structures and amplifies errors.",
+    },
+    firstExercise: {
+      zh: "從 5 篇短文手動列出 entities 和 relationships，再比較 LLM 抽取結果，確認 schema 是否可驗證。",
+      en: "Manually list entities and relationships from five short documents, then compare LLM extraction to confirm whether the schema is verifiable.",
+    },
+    compareWith: ["Advanced RAG patterns", "Hybrid search and reranking", "Neo4j", "LlamaIndex"],
+  },
+  "dci-agent-lite": {
+    before: {
+      zh: "先把 corpus 保持成可搜尋的 raw files，並保留路徑、行號、page/figure/table metadata。",
+      en: "First keep the corpus as searchable raw files and preserve paths, line numbers, page/figure/table metadata.",
+    },
+    after: {
+      zh: "讓 agent 用 rg/find/sed 多步查證，再把 evidence log 轉成可引用答案或 evaluation trace。",
+      en: "Let the agent use rg/find/sed for multi-step evidence checks, then turn evidence logs into citeable answers or evaluation traces.",
+    },
+    commonConfusion: {
+      zh: "DCI 不是一般向量檢索；它偏 direct corpus interaction，適合需要精準 provenance 與多步查找的本地 corpus。",
+      en: "DCI is not ordinary vector retrieval. It is direct corpus interaction, useful for local corpora requiring precise provenance and multi-step lookup.",
+    },
+    firstExercise: {
+      zh: "對一個本地資料夾設計 3 個問題，要求回答必須附檔名與行號，觀察 agent 如何查證。",
+      en: "Design three questions over a local folder and require answers with filenames and line numbers, then observe how the agent verifies evidence.",
+    },
+    compareWith: ["Hybrid search and reranking", "FAISS", "MCP", "RAG evaluation and observability"],
+  },
+};
 
 export const tools: Tool[] = [
   {
