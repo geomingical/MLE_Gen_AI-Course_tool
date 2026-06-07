@@ -3,7 +3,7 @@
 ## 中文
 
 ### Status
-`Extension`: 這個層橫跨 Class1-Class4。Class1 學 prompt/API，Class3/4 開始把 ASR、LLM、TTS、retriever 串成系統；tool/plugin/protocol layer 是讓模型可靠使用外部能力的下一步。
+`Extension`: 這個層橫跨 Class1-Class5。Class1 學 prompt/API，Class3/4 開始把 ASR、LLM、TTS、retriever 串成系統，Class5 則加入 fine-tuning 與 hybrid retrieval；tool/plugin/protocol layer 是讓模型可靠使用外部能力的下一步。
 
 ### Extension map
 
@@ -31,7 +31,7 @@
 ## English
 
 ### Status
-`Extension`: This layer spans Class1-Class4. Class1 teaches prompts/APIs, while Class3/4 begin composing ASR, LLMs, TTS, and retrievers into systems. The tool/plugin/protocol layer is the next step for making models reliably use external capabilities.
+`Extension`: This layer spans Class1-Class5. Class1 teaches prompts/APIs, Class3/4 compose ASR, LLMs, TTS, and retrievers into systems, and Class5 adds fine-tuning plus hybrid retrieval. The tool/plugin/protocol layer is the next step for making models reliably use external capabilities.
 
 ### Extension map
 

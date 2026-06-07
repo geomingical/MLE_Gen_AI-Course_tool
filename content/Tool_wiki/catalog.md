@@ -31,9 +31,22 @@
 | sentence-transformers | Local embedding library | Course-covered | Class4 local embedding generation | [embeddings](tools/embeddings.md) |
 | OpenAI embeddings | Hosted embedding API/service | Course-covered | Class4 OpenAI embedding generation | [embeddings](tools/embeddings.md) |
 | sentence-transformers and OpenAI embeddings | Embeddings | Course-covered | Class4 RAG | [embeddings](tools/embeddings.md) |
+| Supervised fine-tuning (SFT) | Fine-tuning method | Course-covered | Class5 SFT lecture | [class5-sft](tools/class5-sft.md) |
+| ChatML / chat templates | Training data format | Course-covered | Class5 chat data format | [class5-sft](tools/class5-sft.md) |
+| Hugging Face Datasets | Dataset library | Course-covered | Class5 train/eval data loading | [class5-sft](tools/class5-sft.md) |
+| PEFT | Fine-tuning library | Course-covered | Class5 LoRA/QLoRA adapter training | [class5-sft](tools/class5-sft.md) |
+| LoRA | Fine-tuning method | Course-covered | Class5 parameter-efficient fine-tuning | [class5-sft](tools/class5-sft.md) |
+| QLoRA | Fine-tuning method | Course-covered | Class5 low-VRAM adapter fine-tuning | [class5-sft](tools/class5-sft.md) |
+| TRL / SFTTrainer | Training library | Course-covered | Class5 SFT training wrapper | [class5-sft](tools/class5-sft.md) |
+| TrainingArguments / Trainer | Training API | Course-covered | Class5 Hugging Face training loop | [class5-sft](tools/class5-sft.md) |
+| DeepSpeed | Distributed training | Course-covered | Class5 large-model/multi-GPU training | [class5-sft](tools/class5-sft.md) |
+| Perplexity / eval loss | Evaluation metric | Course-covered | Class5 fine-tuning evaluation | [class5-evaluation](tools/class5-evaluation.md) |
+| Hybrid retrieval with FAISS + SQLite FTS5/BM25 | Hybrid retrieval | Course-covered | Class5 HW, extends Class4 RAG | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
+| SQLite FTS5 / BM25 | Keyword search | Course-covered | Class5 HW sparse retrieval | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
+| Reciprocal Rank Fusion (RRF) | Retrieval fusion | Course-covered | Class5 HW hybrid ranking | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
-| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class4 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
+| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class5 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
 | Chroma, Qdrant, Weaviate, LanceDB, Milvus, Pinecone, pgvector | Vector DBs | Supplemental | Alternatives to local FAISS | [supplemental-vector-databases](tools/supplemental-vector-databases.md) |
 | Docling, MarkItDown, Unstructured | Document extraction | Supplemental | Alternatives/complements to OCR pipeline | [supplemental-document-extraction](tools/supplemental-document-extraction.md) |
 | Instructor, Pydantic AI, DSPy, LangGraph, LiteLLM | Prompt/API extensions | Extension | Extends Class1 structured output and API workflows | [class1-prompt-api-extensions](tools/class1-prompt-api-extensions.md) |
@@ -45,6 +58,12 @@
 | Knowledge graph, GraphRAG, graph traversal | Knowledge graph RAG | Extension | Extends Class4 for relationship-heavy corpora | [knowledge-graphs-graphrag](tools/knowledge-graphs-graphrag.md) |
 | DCI-Agent-Lite | Direct Corpus Interaction | Extension | Extends Class3 corpus layout and Class4 retrieval | [dci-agent-lite](tools/dci-agent-lite.md) |
 | RAGAS, DeepEval, Phoenix, LangSmith, Langfuse | Evaluation/observability | Extension | Extends Class1 failure notes and Class4 RAG evaluation | [rag-evaluation-observability](tools/rag-evaluation-observability.md) |
+| Unsloth | Fine-tuning acceleration | Extension | Extends Class5 LoRA/QLoRA workflows | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| Axolotl | Fine-tuning framework | Extension | Extends Class5 config-driven training | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| LLaMA-Factory | Fine-tuning framework | Extension | Extends Class5 with WebUI/CLI training | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| FSDP | Distributed training | Extension | Extends Class5 scaling stack | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| Gradient checkpointing, accumulation, FlashAttention | VRAM optimization | Extension | Extends Class5 memory/speed optimization | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| MMLU / GSM8K benchmarks | Benchmark | Extension | Extends Class5 fine-tuning evaluation | [class5-evaluation](tools/class5-evaluation.md) |
 
 ## English
 
@@ -77,9 +96,22 @@
 | sentence-transformers | Local embedding library | Course-covered | Class4 local embedding generation | [embeddings](tools/embeddings.md) |
 | OpenAI embeddings | Hosted embedding API/service | Course-covered | Class4 OpenAI embedding generation | [embeddings](tools/embeddings.md) |
 | sentence-transformers and OpenAI embeddings | Embeddings | Course-covered | Class4 RAG | [embeddings](tools/embeddings.md) |
+| Supervised fine-tuning (SFT) | Fine-tuning method | Course-covered | Class5 SFT lecture | [class5-sft](tools/class5-sft.md) |
+| ChatML / chat templates | Training data format | Course-covered | Class5 chat data format | [class5-sft](tools/class5-sft.md) |
+| Hugging Face Datasets | Dataset library | Course-covered | Class5 train/eval data loading | [class5-sft](tools/class5-sft.md) |
+| PEFT | Fine-tuning library | Course-covered | Class5 LoRA/QLoRA adapter training | [class5-sft](tools/class5-sft.md) |
+| LoRA | Fine-tuning method | Course-covered | Class5 parameter-efficient fine-tuning | [class5-sft](tools/class5-sft.md) |
+| QLoRA | Fine-tuning method | Course-covered | Class5 low-VRAM adapter fine-tuning | [class5-sft](tools/class5-sft.md) |
+| TRL / SFTTrainer | Training library | Course-covered | Class5 SFT training wrapper | [class5-sft](tools/class5-sft.md) |
+| TrainingArguments / Trainer | Training API | Course-covered | Class5 Hugging Face training loop | [class5-sft](tools/class5-sft.md) |
+| DeepSpeed | Distributed training | Course-covered | Class5 large-model/multi-GPU training | [class5-sft](tools/class5-sft.md) |
+| Perplexity / eval loss | Evaluation metric | Course-covered | Class5 fine-tuning evaluation | [class5-evaluation](tools/class5-evaluation.md) |
+| Hybrid retrieval with FAISS + SQLite FTS5/BM25 | Hybrid retrieval | Course-covered | Class5 HW, extends Class4 RAG | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
+| SQLite FTS5 / BM25 | Keyword search | Course-covered | Class5 HW sparse retrieval | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
+| Reciprocal Rank Fusion (RRF) | Retrieval fusion | Course-covered | Class5 HW hybrid ranking | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
-| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class4 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
+| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class5 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
 | Chroma, Qdrant, Weaviate, LanceDB, Milvus, Pinecone, pgvector | Vector DBs | Supplemental | Alternatives to local FAISS | [supplemental-vector-databases](tools/supplemental-vector-databases.md) |
 | Docling, MarkItDown, Unstructured | Document extraction | Supplemental | Alternatives/complements to OCR pipeline | [supplemental-document-extraction](tools/supplemental-document-extraction.md) |
 | Instructor, Pydantic AI, DSPy, LangGraph, LiteLLM | Prompt/API extensions | Extension | Extends Class1 structured output and API workflows | [class1-prompt-api-extensions](tools/class1-prompt-api-extensions.md) |
@@ -91,3 +123,9 @@
 | Knowledge graph, GraphRAG, graph traversal | Knowledge graph RAG | Extension | Extends Class4 for relationship-heavy corpora | [knowledge-graphs-graphrag](tools/knowledge-graphs-graphrag.md) |
 | DCI-Agent-Lite | Direct Corpus Interaction | Extension | Extends Class3 corpus layout and Class4 retrieval | [dci-agent-lite](tools/dci-agent-lite.md) |
 | RAGAS, DeepEval, Phoenix, LangSmith, Langfuse | Evaluation/observability | Extension | Extends Class1 failure notes and Class4 RAG evaluation | [rag-evaluation-observability](tools/rag-evaluation-observability.md) |
+| Unsloth | Fine-tuning acceleration | Extension | Extends Class5 LoRA/QLoRA workflows | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| Axolotl | Fine-tuning framework | Extension | Extends Class5 config-driven training | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| LLaMA-Factory | Fine-tuning framework | Extension | Extends Class5 with WebUI/CLI training | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| FSDP | Distributed training | Extension | Extends Class5 scaling stack | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| Gradient checkpointing, accumulation, FlashAttention | VRAM optimization | Extension | Extends Class5 memory/speed optimization | [class5-finetuning-extensions](tools/class5-finetuning-extensions.md) |
+| MMLU / GSM8K benchmarks | Benchmark | Extension | Extends Class5 fine-tuning evaluation | [class5-evaluation](tools/class5-evaluation.md) |

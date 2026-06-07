@@ -2,7 +2,7 @@
 
 ## 中文
 
-這個 wiki 整理 `Class1-Class4` 課程與 homework 真的出現過的工具，並補充現階段常見但課程未必完整介紹的主流工具。分類方式不是按照章節，而是按照技術流：提示與 API、local inference、資料蒐集、OCR/ASR、清理去重、RAG、serving 與評估。
+這個 wiki 整理 `Class1-Class5` 課程與 homework 真的出現過的工具，並補充現階段常見但課程未必完整介紹的主流工具。分類方式不是按照章節，而是按照技術流：提示與 API、local inference、資料蒐集、OCR/ASR、清理去重、RAG、fine-tuning/SFT、serving 與評估。
 
 每個工具頁都會回答三個問題：
 
@@ -17,7 +17,7 @@
 
 ## English
 
-This wiki documents tools that actually appear in `Class1-Class4` course materials and homework, plus a small set of mainstream tools that are useful context but not necessarily taught in depth. The structure follows the technical workflow instead of class numbers: prompting and APIs, local inference, data collection, OCR/ASR, cleaning and deduplication, RAG, serving, and evaluation.
+This wiki documents tools that actually appear in `Class1-Class5` course materials and homework, plus a small set of mainstream tools that are useful context but not necessarily taught in depth. The structure follows the technical workflow instead of class numbers: prompting and APIs, local inference, data collection, OCR/ASR, cleaning and deduplication, RAG, fine-tuning/SFT, serving, and evaluation.
 
 Each tool page answers three practical questions:
 
@@ -29,6 +29,7 @@ Label policy:
 
 - `Course-covered`: explicitly appears in course READMEs, lectures, homework, or code.
 - `Supplemental`: not covered or only lightly mentioned, but common in current GenAI/MLE workflows.
+- `Extension`: intentionally added beyond the core course path as a mainstream next-step concept, method, package, framework, or workflow.
 
 ## Learner Taxonomy / 學習者分類標籤
 

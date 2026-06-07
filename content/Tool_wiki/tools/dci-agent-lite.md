@@ -3,7 +3,7 @@
 ## 中文
 
 ### Status
-`Extension`: DCI-Agent-Lite 不是 Class1-Class4 的課程工具。它是 RAG 之外的 agentic search 延伸，適合 raw corpus 可直接被 terminal 搜尋的研究資料。
+`Extension`: DCI-Agent-Lite 不是 Class1-Class5 的課程工具。它是 RAG 之外的 agentic search 延伸，適合 raw corpus 可直接被 terminal 搜尋的研究資料。
 
 ### What it is
 DCI 指 Direct Corpus Interaction。它不是先建立固定 retriever 或 vector index，而是讓 agent 直接用 terminal tools 查 raw corpus，例如 `rg`、`find`、`sed`。DCI-Agent-Lite 是這個 paradigm 的輕量 open implementation。
@@ -32,7 +32,7 @@ DCI 指 Direct Corpus Interaction。它不是先建立固定 retriever 或 vecto
 ## English
 
 ### Status
-`Extension`: DCI-Agent-Lite is not a Class1-Class4 course tool. It is an agentic-search extension beyond RAG, suitable for research corpora that can be searched directly through terminal tools.
+`Extension`: DCI-Agent-Lite is not a Class1-Class5 course tool. It is an agentic-search extension beyond RAG, suitable for research corpora that can be searched directly through terminal tools.
 
 ### What it is
 DCI means Direct Corpus Interaction. Instead of building a fixed retriever or vector index first, it lets an agent inspect the raw corpus directly with terminal tools such as `rg`, `find`, and `sed`. DCI-Agent-Lite is a minimal open implementation of this paradigm.

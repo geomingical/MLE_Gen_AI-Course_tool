@@ -14,10 +14,13 @@
 | Data/extraction extensions | dynamic crawling、LLM-ready web extraction、complex PDF parsing、speaker diarization | Extension of Class3 | Scrapy, Playwright, Crawl4AI, MinerU, Docling, WhisperX, pyannote | 是靜態網頁、動態網頁、PDF、音訊，還是多格式 corpus？ |
 | Cleaning and dedup | 去除髒資料、重複內容、語言/PII 問題 | Class3 cleaning, Class2 HW cleaning | pandas, regex, langdetect, spaCy, datasketch | 要保留多少原始資料？去重 threshold 是否會誤刪？ |
 | RAG | chunk、embedding、index、retrieval、generation | Class4 RAG resume AI | sentence-transformers, OpenAI embeddings, FAISS, LangChain RetrievalQA | chunk size、embedding model、vector DB、citation strategy 如何選？ |
-| RAG/search extensions | CAG、GraphRAG、hybrid search、reranking、DCI、evaluation | Extension of Class4 | CAG, GraphRAG, BM25, rerankers, DCI-Agent-Lite, RAGAS, Phoenix | 失敗點是 retrieval、corpus structure、latency，還是 evaluation 不足？ |
-| Tool/plugin/protocol layer | 讓模型穩定呼叫外部工具與 app | Extension across Class1-Class4 | OpenAI tool calling, MCP, LangChain tools, Pydantic AI toolsets, plugins | 工具權限、side effects、schema、provenance 是否清楚？ |
+| Hybrid retrieval | 結合 dense vector search 與 sparse keyword search | Class5 HW, extends Class4 RAG | FAISS, SQLite FTS5, BM25, RRF, Recall@k | semantic match 與 exact keyword match 如何合併？ |
+| RAG/search extensions | CAG、GraphRAG、hybrid search、reranking、DCI、evaluation | Extension of Class4-Class5 retrieval | CAG, GraphRAG, BM25, rerankers, DCI-Agent-Lite, RAGAS, Phoenix | 失敗點是 retrieval、corpus structure、latency，還是 evaluation 不足？ |
+| Fine-tuning/SFT | 用 labeled examples 調整模型行為、格式或語氣 | Class5 SFT lecture | ChatML, Hugging Face Datasets, PEFT, LoRA, QLoRA, TRL, DeepSpeed | 問題需要改模型權重，還是 prompt/RAG 已足夠？ |
+| Fine-tuning extensions | 加速、封裝、多卡與顯存優化 | Extension of Class5 | Unsloth, Axolotl, LLaMA-Factory, FSDP, gradient checkpointing, FlashAttention | 要先學底層，還是用 framework 提高可重現性與效率？ |
+| Tool/plugin/protocol layer | 讓模型穩定呼叫外部工具與 app | Extension across Class1-Class5 | OpenAI tool calling, MCP, LangChain tools, Pydantic AI toolsets, plugins | 工具權限、side effects、schema、provenance 是否清楚？ |
 | Serving and integration | 將工具串成可呼叫的服務或 agent | Class3 voice agent, Class4 vLLM-compatible endpoint | FastAPI, vLLM, OpenAI-compatible APIs | 只是 demo server，還是要可部署和可觀測？ |
-| Evaluation | 測試輸出品質、retrieval 命中與失敗案例 | Class1 defects, Class4 RAG evaluation | manual cases, RAGAS/RAGEval as supplemental | 評估 hallucination、citation、latency、cost 哪個最重要？ |
+| Evaluation | 測試輸出品質、retrieval 命中、fine-tuning loss 與失敗案例 | Class1 defects, Class4 RAG evaluation, Class5 PPL/Recall@k | manual cases, PPL/eval loss, Recall@k, MMLU/GSM8K, RAGAS/Phoenix | 評估 hallucination、citation、latency、cost、PPL 還是 retrieval recall？ |
 
 ## English
 
@@ -33,7 +36,10 @@
 | Data/extraction extensions | Dynamic crawling, LLM-ready web extraction, complex PDF parsing, speaker diarization | Extension of Class3 | Scrapy, Playwright, Crawl4AI, MinerU, Docling, WhisperX, pyannote | Static web, dynamic web, PDF, audio, or multi-format corpus? |
 | Cleaning and dedup | Remove noisy data, duplicates, language issues, and PII | Class3 cleaning, Class2 HW cleaning | pandas, regex, langdetect, spaCy, datasketch | How much raw data should remain? Can the dedup threshold remove useful near-duplicates? |
 | RAG | Chunk, embed, index, retrieve, and generate grounded answers | Class4 RAG resume AI | sentence-transformers, OpenAI embeddings, FAISS, LangChain RetrievalQA | How should chunk size, embedding model, vector DB, and citations be chosen? |
-| RAG/search extensions | CAG, GraphRAG, hybrid search, reranking, DCI, evaluation | Extension of Class4 | CAG, GraphRAG, BM25, rerankers, DCI-Agent-Lite, RAGAS, Phoenix | Is the failure retrieval, corpus structure, latency, or missing evaluation? |
-| Tool/plugin/protocol layer | Let models call external tools and apps reliably | Extension across Class1-Class4 | OpenAI tool calling, MCP, LangChain tools, Pydantic AI toolsets, plugins | Are permissions, side effects, schema, and provenance clear? |
+| Hybrid retrieval | Combine dense vector search with sparse keyword search | Class5 HW, extends Class4 RAG | FAISS, SQLite FTS5, BM25, RRF, Recall@k | How should semantic matches and exact keyword matches be fused? |
+| RAG/search extensions | CAG, GraphRAG, hybrid search, reranking, DCI, evaluation | Extension of Class4-Class5 retrieval | CAG, GraphRAG, BM25, rerankers, DCI-Agent-Lite, RAGAS, Phoenix | Is the failure retrieval, corpus structure, latency, or missing evaluation? |
+| Fine-tuning/SFT | Adapt model behavior, format, or style with labeled examples | Class5 SFT lecture | ChatML, Hugging Face Datasets, PEFT, LoRA, QLoRA, TRL, DeepSpeed | Does the problem need weight updates, or are prompt/RAG enough? |
+| Fine-tuning extensions | Add acceleration, wrappers, distributed training, and memory optimization | Extension of Class5 | Unsloth, Axolotl, LLaMA-Factory, FSDP, gradient checkpointing, FlashAttention | Learn the internals first, or use frameworks for reproducibility and speed? |
+| Tool/plugin/protocol layer | Let models call external tools and apps reliably | Extension across Class1-Class5 | OpenAI tool calling, MCP, LangChain tools, Pydantic AI toolsets, plugins | Are permissions, side effects, schema, and provenance clear? |
 | Serving and integration | Turn tools into callable services or agent components | Class3 voice agent, Class4 vLLM-compatible endpoint | FastAPI, vLLM, OpenAI-compatible APIs | Demo server or deployable service with observability? |
-| Evaluation | Test output quality, retrieval hits, and failure cases | Class1 defects, Class4 RAG evaluation | manual cases, RAGAS/RAGEval as supplemental | Which matters most: hallucination, citations, latency, or cost? |
+| Evaluation | Test output quality, retrieval hits, fine-tuning loss, and failure cases | Class1 defects, Class4 RAG evaluation, Class5 PPL/Recall@k | manual cases, PPL/eval loss, Recall@k, MMLU/GSM8K, RAGAS/Phoenix | Which matters most: hallucination, citations, latency, cost, PPL, or retrieval recall? |

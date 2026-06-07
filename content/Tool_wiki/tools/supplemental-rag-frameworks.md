@@ -3,7 +3,7 @@
 ## 中文
 
 ### Status
-`Supplemental`: 這些工具是現代 GenAI workflow 常見工具，但不是 Class1-Class4 的主要實作核心。
+`Supplemental`: 這些工具是現代 GenAI workflow 常見工具，但不是 Class1-Class5 的主要實作核心。
 
 ### LlamaIndex
 LlamaIndex 是偏 data/RAG-first 的框架。它把 documents、nodes、index、query engine、chat engine 等概念包成面向資料接入與 retrieval 的工作流。
@@ -30,7 +30,7 @@ Avoid it when:
 - 你不需要 routing/gateway 抽象。
 
 ### Course mapping
-這些不是 Class1-Class4 的主要工具，但可延伸 Class1 API abstraction 與 Class4 RAG 的設計。
+這些不是 Class1-Class5 的主要工具，但可延伸 Class1 API abstraction 與 Class4/Class5 retrieval 的設計。
 
 ### Practical notes
 補充工具不能解決基本資料品質問題。RAG 失敗時，先檢查 source text、chunk、embedding、retrieval，再考慮換框架。
@@ -38,7 +38,7 @@ Avoid it when:
 ## English
 
 ### Status
-`Supplemental`: These tools are common in current GenAI workflows, but they are not the main implementation tools in Class1-Class4.
+`Supplemental`: These tools are common in current GenAI workflows, but they are not the main implementation tools in Class1-Class5.
 
 ### LlamaIndex
 LlamaIndex is a data/RAG-first framework. It organizes documents, nodes, indexes, query engines, chat engines, and related abstractions around data ingestion and retrieval.
@@ -65,7 +65,7 @@ Avoid it when:
 - You do not need routing or gateway abstractions.
 
 ### Course mapping
-These are not the main Class1-Class4 tools, but they extend Class1 API abstraction and Class4 RAG design.
+These are not the main Class1-Class5 tools, but they extend Class1 API abstraction and Class4/Class5 retrieval design.
 
 ### Practical notes
 Supplemental frameworks do not fix basic data quality problems. When RAG fails, inspect source text, chunks, embeddings, and retrieval before changing frameworks.
