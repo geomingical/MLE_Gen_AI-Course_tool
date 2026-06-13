@@ -5,7 +5,7 @@ import { Language, Tool, ToolStatus, getLearnerGuide, getToolMeta, pipelineHighl
 const labels = {
   zh: {
     title: "MLE Gen AI 工具參考",
-    subtitle: "Class1-Class5 課程工具、延伸 package、framework、plugin/protocol 的雙語工具書。",
+    subtitle: "Class1-Class6 課程工具、延伸 package、framework、plugin/protocol 的雙語工具書。",
     search: "搜尋工具、標籤或課程",
     status: "狀態",
     stage: "技術流",
@@ -37,7 +37,7 @@ const labels = {
   },
   en: {
     title: "MLE Gen AI Tool Reference",
-    subtitle: "Bilingual reference for Class1-Class5 tools, extensions, frameworks, plugins, and protocols.",
+    subtitle: "Bilingual reference for Class1-Class6 tools, extensions, frameworks, plugins, and protocols.",
     search: "Search tools, tags, or course",
     status: "Status",
     stage: "Workflow",

@@ -1,6 +1,6 @@
 # MLE Gen AI Course Tool Reference
 
-Bilingual static reference site for tools used in `Machine Learning Engineer in the Generative AI Era`, focused on Class1-Class5 and curated extensions.
+Bilingual static reference site for tools used in `Machine Learning Engineer in the Generative AI Era`, focused on Class1-Class6 and curated extensions.
 
 ## Static Site
 
@@ -19,6 +19,7 @@ This site is designed as a learner-facing tool reference, not a generic package 
 - Audio/voice
 - Cleaning/deduplication
 - RAG/search
+- SFT dataset engineering
 - Fine-tuning/SFT
 - Tool/plugin/protocol layer
 - Serving

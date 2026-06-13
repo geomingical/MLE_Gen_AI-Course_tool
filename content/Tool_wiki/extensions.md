@@ -2,7 +2,7 @@
 
 ## 中文
 
-這頁整理上完 Class1-Class5 後值得繼續查的延伸技術。這些內容不是課程第一輪的核心實作，標記為 `Extension`，用途是把 `Tool_wiki` 從課堂筆記擴充成可長期查詢的工具書。延伸內容不限於 package，也包含 framework、plugin、protocol、server/runtime、training framework 和 workflow pattern。
+這頁整理上完 Class1-Class6 後值得繼續查的延伸技術。這些內容不是課程第一輪的核心實作，標記為 `Extension`，用途是把 `Tool_wiki` 從課堂筆記擴充成可長期查詢的工具書。延伸內容不限於 package，也包含 framework、plugin、protocol、server/runtime、training framework 和 workflow pattern。
 
 | 延伸方向 | 什麼時候需要 | 對應頁面 |
 | --- | --- | --- |
@@ -28,11 +28,12 @@
 6. 對 raw-file-heavy research corpus，再考慮 DCI-style agentic search。
 7. 對小型固定知識庫，再評估 CAG 是否比 RAG 更簡單。
 8. 進入 Class5 fine-tuning 前，先問：prompt/RAG 是否已足夠？若真的要改模型行為，再學 SFT、LoRA/QLoRA、PEFT/TRL。
-9. 等 SFT baseline 跑通後，再加入 Unsloth、Axolotl、LLaMA-Factory、FSDP、FlashAttention 等延伸工具。
+9. Class6 補上 SFT dataset engineering：先用 data buckets 定義能力覆蓋，再做資料混合、切分與品質檢查。
+10. 等 SFT baseline 跑通後，再加入 Unsloth、Axolotl、LLaMA-Factory、FSDP、FlashAttention 等延伸工具。
 
 ## English
 
-This page organizes extension topics worth studying after Class1-Class5. They are not the core first-pass course implementation, so they are marked as `Extension`. The goal is to grow `Tool_wiki` from course notes into a long-term reference manual. Extensions include packages, frameworks, plugins, protocols, servers/runtimes, training frameworks, and workflow patterns.
+This page organizes extension topics worth studying after Class1-Class6. They are not the core first-pass course implementation, so they are marked as `Extension`. The goal is to grow `Tool_wiki` from course notes into a long-term reference manual. Extensions include packages, frameworks, plugins, protocols, servers/runtimes, training frameworks, and workflow patterns.
 
 | Extension direction | When you need it | Page |
 | --- | --- | --- |
@@ -58,4 +59,5 @@ This page organizes extension topics worth studying after Class1-Class5. They ar
 6. For raw-file-heavy research corpora, consider DCI-style agentic search.
 7. For small fixed knowledge bases, evaluate whether CAG is simpler than RAG.
 8. Before entering Class5 fine-tuning, ask whether prompting/RAG is already enough. If model behavior truly needs to change, learn SFT, LoRA/QLoRA, PEFT/TRL.
-9. After an SFT baseline works, add extensions such as Unsloth, Axolotl, LLaMA-Factory, FSDP, and FlashAttention.
+9. Class6 adds SFT dataset engineering: use data buckets to define capability coverage, then mix, split, and quality-check the data.
+10. After an SFT baseline works, add extensions such as Unsloth, Axolotl, LLaMA-Factory, FSDP, and FlashAttention.

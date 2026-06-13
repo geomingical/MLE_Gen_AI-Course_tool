@@ -44,9 +44,15 @@
 | Hybrid retrieval with FAISS + SQLite FTS5/BM25 | Hybrid retrieval | Course-covered | Class5 HW, extends Class4 RAG | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
 | SQLite FTS5 / BM25 | Keyword search | Course-covered | Class5 HW sparse retrieval | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
 | Reciprocal Rank Fusion (RRF) | Retrieval fusion | Course-covered | Class5 HW hybrid ranking | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
+| SFT dataset engineering | Dataset workflow | Course-covered | Class6 SFT dataset lecture/data flow | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Data bucket strategy | Dataset design pattern | Course-covered | Class6 Domain-Specific, Behavioral, Scenario-based, Identity Reinforcement buckets | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Domain-Specific data bucket | Dataset bucket | Course-covered | Class6 technical background expansion | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Behavioral data bucket | Dataset bucket | Course-covered | Class6 random behavioral question sampling | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Scenario-based data bucket | Dataset bucket | Course-covered | Class6 production scenario questions | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Identity Reinforcement data bucket | Dataset bucket | Course-covered | Class6 role-setting QA pairs | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
-| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class5 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
+| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class6 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
 | Chroma, Qdrant, Weaviate, LanceDB, Milvus, Pinecone, pgvector | Vector DBs | Supplemental | Alternatives to local FAISS | [supplemental-vector-databases](tools/supplemental-vector-databases.md) |
 | Docling, MarkItDown, Unstructured | Document extraction | Supplemental | Alternatives/complements to OCR pipeline | [supplemental-document-extraction](tools/supplemental-document-extraction.md) |
 | Instructor, Pydantic AI, DSPy, LangGraph, LiteLLM | Prompt/API extensions | Extension | Extends Class1 structured output and API workflows | [class1-prompt-api-extensions](tools/class1-prompt-api-extensions.md) |
@@ -109,9 +115,15 @@
 | Hybrid retrieval with FAISS + SQLite FTS5/BM25 | Hybrid retrieval | Course-covered | Class5 HW, extends Class4 RAG | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
 | SQLite FTS5 / BM25 | Keyword search | Course-covered | Class5 HW sparse retrieval | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
 | Reciprocal Rank Fusion (RRF) | Retrieval fusion | Course-covered | Class5 HW hybrid ranking | [class5-hybrid-retrieval](tools/class5-hybrid-retrieval.md) |
+| SFT dataset engineering | Dataset workflow | Course-covered | Class6 SFT dataset lecture/data flow | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Data bucket strategy | Dataset design pattern | Course-covered | Class6 Domain-Specific, Behavioral, Scenario-based, Identity Reinforcement buckets | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Domain-Specific data bucket | Dataset bucket | Course-covered | Class6 technical background expansion | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Behavioral data bucket | Dataset bucket | Course-covered | Class6 random behavioral question sampling | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Scenario-based data bucket | Dataset bucket | Course-covered | Class6 production scenario questions | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Identity Reinforcement data bucket | Dataset bucket | Course-covered | Class6 role-setting QA pairs | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
-| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class5 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
+| LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class6 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
 | Chroma, Qdrant, Weaviate, LanceDB, Milvus, Pinecone, pgvector | Vector DBs | Supplemental | Alternatives to local FAISS | [supplemental-vector-databases](tools/supplemental-vector-databases.md) |
 | Docling, MarkItDown, Unstructured | Document extraction | Supplemental | Alternatives/complements to OCR pipeline | [supplemental-document-extraction](tools/supplemental-document-extraction.md) |
 | Instructor, Pydantic AI, DSPy, LangGraph, LiteLLM | Prompt/API extensions | Extension | Extends Class1 structured output and API workflows | [class1-prompt-api-extensions](tools/class1-prompt-api-extensions.md) |

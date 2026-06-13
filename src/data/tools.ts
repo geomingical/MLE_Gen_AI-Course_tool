@@ -43,6 +43,7 @@ export const stages = [
   "Audio/voice",
   "Cleaning/dedup",
   "RAG/search",
+  "SFT dataset engineering",
   "Fine-tuning/SFT",
   "Tool/plugin layer",
   "Serving",
@@ -115,6 +116,7 @@ function inferRole(tool: Tool): string {
   if (tool.stage === "Audio/voice") return "Transcribe or serve voice";
   if (tool.stage === "Cleaning/dedup") return "Clean and deduplicate data";
   if (tool.stage === "RAG/search") return "Retrieve, rank, or ground answers";
+  if (tool.stage === "SFT dataset engineering") return "Design, mix, and validate SFT training data";
   if (tool.stage === "Fine-tuning/SFT") return "Adapt models with supervised training";
   if (tool.stage === "Tool/plugin layer") return "Connect models to external tools";
   if (tool.stage === "Serving") return "Expose a pipeline as an API";
@@ -549,6 +551,120 @@ print(cosine_similarity([vectors[0]], vectors[1:]))`,
       en: "Design three questions over a local folder and require answers with filenames and line numbers, then observe how the agent verifies evidence.",
     },
     compareWith: ["Hybrid search and reranking", "FAISS", "MCP", "RAG evaluation and observability"],
+  },
+  "sft-dataset-engineering": {
+    before: {
+      zh: "先定義目標 persona、任務邊界與 eval prompts。資料工程不是先生成越多越好，而是先定義每個資料桶要訓練哪種能力。",
+      en: "First define the target persona, task boundary, and eval prompts. Dataset engineering starts with deciding what each bucket should train, not with generating more records.",
+    },
+    after: {
+      zh: "把資料轉成 ChatML/messages 或 JSONL，保存 bucket label、source、generation method、review status，再切 train/eval。",
+      en: "Convert records into ChatML/messages or JSONL, preserve bucket labels, source, generation method, and review status, then split train/eval.",
+    },
+    commonConfusion: {
+      zh: "SFT dataset engineering 不是訓練演算法；它是訓練前的能力覆蓋、品質控制與 leakage 控制。",
+      en: "SFT dataset engineering is not a training algorithm; it controls capability coverage, quality, and leakage before training.",
+    },
+    firstExercise: {
+      zh: "做一個 40 筆 mini dataset，每個 bucket 10 筆，檢查 persona、格式、重複 prompt、bucket ratio 和 eval coverage。",
+      en: "Build a 40-record mini dataset with 10 records per bucket, then check persona, format, duplicate prompts, bucket ratio, and eval coverage.",
+    },
+    compareWith: ["SFT", "ChatML / chat templates", "Hugging Face Datasets", "RAG evaluation and observability"],
+  },
+  "data-bucket-strategy": {
+    before: {
+      zh: "先把想要的模型能力寫成可觀察行為：專業回答、合作溝通、情境排查、角色一致性。",
+      en: "First express desired model capabilities as observable behaviors: domain answers, collaborative communication, scenario diagnosis, and persona consistency.",
+    },
+    after: {
+      zh: "設定每個 bucket 的比例、來源、生成 prompt、人工審查欄位與 held-out eval 題目。",
+      en: "Set each bucket's ratio, source, generation prompt, human-review fields, and held-out eval questions.",
+    },
+    commonConfusion: {
+      zh: "bucket 不是資料夾命名而已；它是讓訓練資料對齊能力目標的設計單位。",
+      en: "A bucket is not just a folder name; it is a design unit that aligns training data with capability goals.",
+    },
+    firstExercise: {
+      zh: "為四個 bucket 各寫 5 個 eval prompts，確認你知道訓練後要怎麼判斷是否改善。",
+      en: "Write five eval prompts for each bucket so you know how to judge improvement after training.",
+    },
+    compareWith: ["SFT dataset engineering", "Instruction tuning", "Evaluation"],
+  },
+  "domain-specific-bucket": {
+    before: {
+      zh: "先確認 domain facts、工具版本與專業術語是否有來源；不要把未查證的生成內容當成硬知識。",
+      en: "First verify sources for domain facts, tool versions, and terminology; do not treat unverified generated content as hard knowledge.",
+    },
+    after: {
+      zh: "把 domain records 和可更新知識分開：穩定術語可進 SFT，常變知識通常放 RAG 或工具查詢。",
+      en: "Separate domain records from updatable knowledge: stable terminology can go into SFT, frequently changing facts usually belong in RAG or tools.",
+    },
+    commonConfusion: {
+      zh: "Domain-specific bucket 的目標是專業語言和任務模式，不是把整個文件庫背進模型。",
+      en: "The domain-specific bucket teaches professional language and task patterns; it is not meant to memorize a full knowledge base.",
+    },
+    firstExercise: {
+      zh: "挑 10 個工具/版本/概念，為每個寫一題解釋題和一題使用時機題，並保留來源欄位。",
+      en: "Pick 10 tools, versions, or concepts; write one explanation question and one use-case question for each, preserving source fields.",
+    },
+    compareWith: ["RAG", "Hugging Face Datasets", "Cleaning/dedup"],
+  },
+  "behavioral-bucket": {
+    before: {
+      zh: "先定義角色面對 teamwork、conflict、ambiguity、feedback 時應該展現的語氣與決策原則。",
+      en: "First define the tone and decision principles the persona should show in teamwork, conflict, ambiguity, and feedback situations.",
+    },
+    after: {
+      zh: "用人工抽樣檢查回答是否具體、有邊界、符合 persona，避免只產生空泛 soft-skill 套話。",
+      en: "Review samples for concreteness, boundaries, and persona fit so the data does not become generic soft-skill boilerplate.",
+    },
+    commonConfusion: {
+      zh: "Behavioral records 不是讓模型變得客套，而是訓練它在協作情境中保持一致、具體、可行的回應方式。",
+      en: "Behavioral records are not about making the model polite; they train consistent, concrete, actionable collaboration behavior.",
+    },
+    firstExercise: {
+      zh: "抽 10 題 behavioral prompts，為每題要求 context、action、tradeoff、reflection 四段回答。",
+      en: "Sample 10 behavioral prompts and require each answer to include context, action, tradeoff, and reflection.",
+    },
+    compareWith: ["Identity reinforcement bucket", "Scenario-based bucket", "SFT"],
+  },
+  "scenario-based-bucket": {
+    before: {
+      zh: "先把 production scenario 拆成症狀、證據、假設、排查步驟、決策與復盤，避免直接輸出結論。",
+      en: "First break production scenarios into symptom, evidence, hypothesis, diagnostic steps, decision, and review instead of jumping to conclusions.",
+    },
+    after: {
+      zh: "用 eval 檢查模型是否分清 observation、inference 和 speculation，並能保留負面或不確定結果。",
+      en: "Use evals to check whether the model separates observation, inference, and speculation, and preserves negative or uncertain results.",
+    },
+    commonConfusion: {
+      zh: "Scenario-based data 可以教排查流程，但未驗證的 chain-of-thought 不應當成標準答案；應偏向可檢查的步驟與證據。",
+      en: "Scenario-based data can teach troubleshooting flow, but unverified chain-of-thought should not be treated as ground truth; prefer checkable steps and evidence.",
+    },
+    firstExercise: {
+      zh: "寫 5 個 incident prompts，每題要求列出已知事實、待查問題、下一個最小驗證動作。",
+      en: "Write five incident prompts, requiring known facts, open questions, and the next smallest verification step.",
+    },
+    compareWith: ["RAG evaluation and observability", "Behavioral bucket", "SFT"],
+  },
+  "identity-reinforcement-bucket": {
+    before: {
+      zh: "先定義角色身份、工作邊界、拒答邊界與不該復甦的 base-model generic behavior。",
+      en: "First define persona identity, work boundaries, refusal boundaries, and base-model generic behaviors that should not resurface.",
+    },
+    after: {
+      zh: "把 identity examples 混入 train 與 eval，但比例不要過高；它應該穩定角色，不應壓過 domain/scenario 能力。",
+      en: "Mix identity examples into train and eval without over-weighting them; they should stabilize persona without overwhelming domain or scenario skills.",
+    },
+    commonConfusion: {
+      zh: "Identity reinforcement 不等於 system prompt replacement。它是訓練資料中的行為提醒，部署時仍需要 prompt 和 safety/eval。",
+      en: "Identity reinforcement is not a system-prompt replacement. It is behavioral reminder data; deployment still needs prompts plus safety/eval.",
+    },
+    firstExercise: {
+      zh: "寫 10 組角色設定對答，包含正常自我介紹、邊界問題、角色衝突 prompt 和 generic assistant drift prompt。",
+      en: "Write 10 persona QA pairs covering self-introduction, boundary questions, persona-conflict prompts, and generic assistant drift prompts.",
+    },
+    compareWith: ["Behavioral bucket", "ChatML / chat templates", "SFT"],
   },
   sft: {
     before: {
@@ -1567,6 +1683,192 @@ export const tools: Tool[] = [
     },
   },
   {
+    id: "sft-dataset-engineering",
+    name: "SFT dataset engineering",
+    category: "Dataset workflow",
+    stage: "SFT dataset engineering",
+    status: "Course-covered",
+    course: "Class6",
+    page: "content/Tool_wiki/tools/class6-sft-dataset-engineering.md",
+    tags: ["sft", "dataset", "jsonl", "data-mixing", "eval-split"],
+    itemType: "Workflow stack",
+    role: "Design, generate, mix, split, and validate SFT records",
+    abstractionLevel: "Workflow stack: capability buckets plus quality control",
+    learningLevel: "Beginner",
+    stack: "Class6 SFT dataset stack",
+    learnerNote: {
+      zh: "Class6 把 SFT 前的資料拼圖拆成能力 bucket；資料比例、來源和 eval coverage 會直接限制訓練結果。",
+      en: "Class6 breaks pre-SFT data into capability buckets; ratios, sources, and eval coverage directly limit training results.",
+    },
+    zh: {
+      summary: "把 SFT 訓練資料設計成可追蹤的能力覆蓋矩陣，包含生成、抽樣、混合、切分與品質檢查。",
+      useWhen: "準備 instruction/chat SFT 資料，且需要模型同時學 domain skill、協作語氣、情境排查與角色一致性。",
+      avoidWhen: "還沒有明確 persona、任務邊界或 eval prompts，只是在堆更多 Q&A。",
+      notes: "保存 bucket label、source、generation method、review status、train/eval split 和 bucket ratio。",
+    },
+    en: {
+      summary: "Designs SFT training data as a traceable capability-coverage matrix covering generation, sampling, mixing, splitting, and quality checks.",
+      useWhen: "Use when preparing instruction/chat SFT data that must teach domain skill, collaboration tone, scenario diagnosis, and persona consistency.",
+      avoidWhen: "Avoid when persona, task boundary, or eval prompts are unclear and the work is only collecting more Q&A.",
+      notes: "Preserve bucket labels, source, generation method, review status, train/eval split, and bucket ratios.",
+    },
+  },
+  {
+    id: "data-bucket-strategy",
+    name: "Data bucket strategy",
+    category: "Dataset design pattern",
+    stage: "SFT dataset engineering",
+    status: "Course-covered",
+    course: "Class6",
+    page: "content/Tool_wiki/tools/class6-sft-dataset-engineering.md",
+    tags: ["data-bucket", "capability-coverage", "data-mixing", "sft"],
+    itemType: "Pattern",
+    role: "Map dataset slices to model capabilities",
+    abstractionLevel: "Dataset design pattern",
+    learningLevel: "Beginner",
+    stack: "Class6 SFT dataset stack",
+    learnerNote: {
+      zh: "Data bucket 是能力設計單位，不只是資料夾名稱；每個 bucket 都要有對應 eval。",
+      en: "A data bucket is a capability design unit, not just a folder name; each bucket needs matching evals.",
+    },
+    zh: {
+      summary: "用 Domain-Specific、Behavioral、Scenario-based、Identity Reinforcement 四個 bucket 組成 SFT 資料集。",
+      useWhen: "需要讓資料集同時覆蓋硬技能、軟技能、情境推理與角色一致性。",
+      avoidWhen: "資料來源、品質規則或能力目標尚未定義。",
+      notes: "混合前先定義 bucket ratio；混合後檢查重複題、衝突 persona 和 eval leakage。",
+    },
+    en: {
+      summary: "Uses Domain-Specific, Behavioral, Scenario-based, and Identity Reinforcement buckets to compose an SFT dataset.",
+      useWhen: "Use when a dataset must cover hard skills, soft skills, scenario reasoning, and persona consistency.",
+      avoidWhen: "Avoid when sources, quality rules, or capability targets are undefined.",
+      notes: "Define bucket ratios before mixing; after mixing, check duplicate prompts, persona conflicts, and eval leakage.",
+    },
+  },
+  {
+    id: "domain-specific-bucket",
+    name: "Domain-Specific data bucket",
+    category: "Dataset bucket",
+    stage: "SFT dataset engineering",
+    status: "Course-covered",
+    course: "Class6",
+    page: "content/Tool_wiki/tools/class6-sft-dataset-engineering.md",
+    tags: ["domain-specific", "technical-background", "tools", "versions", "sft"],
+    itemType: "Pattern",
+    role: "Teach professional terminology and tool-specific detail",
+    abstractionLevel: "Dataset slice / capability bucket",
+    learningLevel: "Beginner",
+    stack: "Class6 SFT dataset stack",
+    learnerNote: {
+      zh: "這個 bucket 訓練專業硬實力與工具細節，但常更新的事實仍應交給 RAG 或工具查詢。",
+      en: "This bucket trains professional hard skills and tool details, but frequently changing facts still belong in RAG or tools.",
+    },
+    zh: {
+      summary: "透過技術背景擴寫、工具版本細節與 domain terminology，訓練模型的專業回答能力。",
+      useWhen: "需要模型穩定使用特定領域語言、工具名稱、版本脈絡或專業判斷。",
+      avoidWhen: "資料未查證、版本容易過期，或目標其實是查詢最新知識。",
+      notes: "保留來源與版本欄位，並把穩定概念和易變事實分開。",
+    },
+    en: {
+      summary: "Uses technical background expansion, tool/version details, and domain terminology to train professional answers.",
+      useWhen: "Use when the model must use domain language, tool names, version context, or professional judgment consistently.",
+      avoidWhen: "Avoid when data is unverified, versions expire quickly, or the real need is latest-knowledge lookup.",
+      notes: "Preserve source and version fields, and separate stable concepts from volatile facts.",
+    },
+  },
+  {
+    id: "behavioral-bucket",
+    name: "Behavioral data bucket",
+    category: "Dataset bucket",
+    stage: "SFT dataset engineering",
+    status: "Course-covered",
+    course: "Class6",
+    page: "content/Tool_wiki/tools/class6-sft-dataset-engineering.md",
+    tags: ["behavioral", "soft-skills", "teamwork", "communication", "sft"],
+    itemType: "Pattern",
+    role: "Teach collaboration and soft-skill dialogue behavior",
+    abstractionLevel: "Dataset slice / capability bucket",
+    learningLevel: "Beginner",
+    stack: "Class6 SFT dataset stack",
+    learnerNote: {
+      zh: "Behavioral bucket 要避免空泛套話；重點是具體情境、取捨與一致的溝通風格。",
+      en: "The behavioral bucket should avoid generic boilerplate; focus on concrete situations, tradeoffs, and consistent communication style.",
+    },
+    zh: {
+      summary: "透過隨機抽樣行為題訓練情商、團隊協作、衝突處理與軟實力對話。",
+      useWhen: "persona 需要在面試、團隊協作、回饋或不確定情境中保持穩定回應。",
+      avoidWhen: "回答只有客套語、沒有具體 context/action/tradeoff/reflection。",
+      notes: "抽樣檢查是否符合角色、是否具體、是否避免過度承諾。",
+    },
+    en: {
+      summary: "Uses sampled behavioral questions to train emotional intelligence, teamwork, conflict handling, and soft-skill dialogue.",
+      useWhen: "Use when the persona must respond consistently in interviews, teamwork, feedback, or ambiguous situations.",
+      avoidWhen: "Avoid records that are only polite boilerplate without context, action, tradeoff, or reflection.",
+      notes: "Sample-review for persona fit, specificity, and avoidance of over-promising.",
+    },
+  },
+  {
+    id: "scenario-based-bucket",
+    name: "Scenario-based data bucket",
+    category: "Dataset bucket",
+    stage: "SFT dataset engineering",
+    status: "Course-covered",
+    course: "Class6",
+    page: "content/Tool_wiki/tools/class6-sft-dataset-engineering.md",
+    tags: ["scenario", "production", "debugging", "reasoning", "sft"],
+    itemType: "Pattern",
+    role: "Teach systematic troubleshooting and operational reasoning",
+    abstractionLevel: "Dataset slice / capability bucket",
+    learningLevel: "Beginner",
+    stack: "Class6 SFT dataset stack",
+    learnerNote: {
+      zh: "Scenario-based bucket 訓練排查流程；要分清觀察、推論與猜測，不能只堆漂亮結論。",
+      en: "The scenario-based bucket trains diagnostic flow; it must separate observation, inference, and speculation instead of only giving neat conclusions.",
+    },
+    zh: {
+      summary: "透過生產環境情境題訓練系統化排查、step-by-step reasoning 與工程判斷。",
+      useWhen: "模型需要處理 incident、debugging、部署失敗、資料品質或服務異常問題。",
+      avoidWhen: "情境沒有可檢查證據，或答案把未驗證推論包裝成事實。",
+      notes: "要求記錄已知事實、待驗假設、下一個最小驗證動作和可能負面結果。",
+    },
+    en: {
+      summary: "Uses production scenarios to train systematic troubleshooting, step-by-step reasoning, and engineering judgment.",
+      useWhen: "Use when the model must handle incidents, debugging, deployment failures, data quality, or service anomalies.",
+      avoidWhen: "Avoid scenarios without checkable evidence or answers that present unverified inferences as facts.",
+      notes: "Require known facts, hypotheses to test, the next smallest verification step, and possible negative results.",
+    },
+  },
+  {
+    id: "identity-reinforcement-bucket",
+    name: "Identity Reinforcement data bucket",
+    category: "Dataset bucket",
+    stage: "SFT dataset engineering",
+    status: "Course-covered",
+    course: "Class6",
+    page: "content/Tool_wiki/tools/class6-sft-dataset-engineering.md",
+    tags: ["identity", "persona", "role", "alignment", "sft"],
+    itemType: "Pattern",
+    role: "Stabilize persona and reduce base-model behavior drift",
+    abstractionLevel: "Dataset slice / capability bucket",
+    learningLevel: "Beginner",
+    stack: "Class6 SFT dataset stack",
+    learnerNote: {
+      zh: "Identity reinforcement 用來穩定人設與邊界，但不能取代部署時的 system prompt、policy 與 eval。",
+      en: "Identity reinforcement stabilizes persona and boundaries, but it does not replace deployment-time system prompts, policy, and evals.",
+    },
+    zh: {
+      summary: "透過角色設定對答訓練模型維持人設一致性，降低基底模型 generic assistant 行為復甦。",
+      useWhen: "模型需要固定身份、語氣、責任邊界、拒答方式或專業角色一致性。",
+      avoidWhen: "identity examples 和 domain/scenario examples 互相衝突，或比例高到壓過任務能力。",
+      notes: "eval 要包含角色衝突 prompt、generic drift prompt、邊界問題與正常任務問題。",
+    },
+    en: {
+      summary: "Uses persona-setting QA pairs to train identity consistency and reduce generic base-model behavior drift.",
+      useWhen: "Use when a model needs stable identity, tone, responsibility boundaries, refusal style, or professional-role consistency.",
+      avoidWhen: "Avoid when identity examples conflict with domain/scenario examples or dominate the dataset ratio.",
+      notes: "Eval should include persona-conflict prompts, generic-drift prompts, boundary questions, and normal task prompts.",
+    },
+  },
+  {
     id: "sft",
     name: "Supervised fine-tuning (SFT)",
     category: "Fine-tuning method",
@@ -2205,7 +2507,7 @@ export const tools: Tool[] = [
     category: "Framework/gateway",
     stage: "RAG/search",
     status: "Supplemental",
-    course: "Beyond Class1-Class5",
+    course: "Beyond Class1-Class6",
     page: "content/Tool_wiki/tools/supplemental-rag-frameworks.md",
     tags: ["llamaindex", "litellm", "rag-framework", "gateway"],
     zh: {
@@ -2489,8 +2791,13 @@ export const pipelineHighlights = [
     en: "From FAISS baseline to Class5 hybrid retrieval, BM25/FTS5, RRF, reranking, GraphRAG, DCI, and evaluation.",
   },
   {
+    stage: "SFT dataset engineering",
+    zh: "從能力目標走到 Domain-Specific、Behavioral、Scenario-based、Identity Reinforcement 四個資料桶、bucket ratio、train/eval split 與品質檢查。",
+    en: "From capability goals to Domain-Specific, Behavioral, Scenario-based, and Identity Reinforcement buckets, bucket ratios, train/eval splits, and quality checks.",
+  },
+  {
     stage: "Fine-tuning/SFT",
-    zh: "從 ChatML 與資料切分走到 SFT、LoRA/QLoRA、PEFT/TRL、顯存優化、多卡訓練與 PPL/benchmark evaluation。",
-    en: "From ChatML and data splits to SFT, LoRA/QLoRA, PEFT/TRL, VRAM optimization, distributed training, and PPL/benchmark evaluation.",
+    zh: "從 ChatML 與已驗證資料走到 SFT、LoRA/QLoRA、PEFT/TRL、顯存優化、多卡訓練與 PPL/benchmark evaluation。",
+    en: "From ChatML and validated data to SFT, LoRA/QLoRA, PEFT/TRL, VRAM optimization, distributed training, and PPL/benchmark evaluation.",
   },
 ];
