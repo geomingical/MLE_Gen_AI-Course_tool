@@ -19,9 +19,11 @@
 | SFT dataset engineering | 設計、產生、抽樣、混合與驗證 SFT 訓練資料 | Class6 SFT dataset lecture/data workflow | data buckets, ChatML/messages, JSONL, train/eval split, bucket ratios | 要訓練哪種能力？各 bucket 比例、品質檢查與 eval coverage 是否足夠？ |
 | Fine-tuning/SFT | 用 labeled examples 調整模型行為、格式或語氣 | Class5 SFT lecture | ChatML, Hugging Face Datasets, PEFT, LoRA, QLoRA, TRL, DeepSpeed | 問題需要改模型權重，還是 prompt/RAG 已足夠？ |
 | Fine-tuning extensions | 加速、封裝、多卡與顯存優化 | Extension of Class5 | Unsloth, Axolotl, LLaMA-Factory, FSDP, gradient checkpointing, FlashAttention | 要先學底層，還是用 framework 提高可重現性與效率？ |
+| Alignment | 用 chosen/rejected 偏好對齊 SFT 後的模型行為 | Class7 PPO/DPO/GRPO 比較 | preference data, PPO, DPO, GRPO, reward model, TRL trainers | 要 reward model 細控（PPO），還是直接偏好優化（DPO/GRPO）？ |
 | Tool/plugin/protocol layer | 讓模型穩定呼叫外部工具與 app | Extension across Class1-Class5 | OpenAI tool calling, MCP, LangChain tools, Pydantic AI toolsets, plugins | 工具權限、side effects、schema、provenance 是否清楚？ |
 | Serving and integration | 將工具串成可呼叫的服務或 agent | Class3 voice agent, Class4 vLLM-compatible endpoint | FastAPI, vLLM, OpenAI-compatible APIs | 只是 demo server，還是要可部署和可觀測？ |
 | Evaluation | 測試輸出品質、retrieval 命中、fine-tuning loss 與失敗案例 | Class1 defects, Class4 RAG evaluation, Class5 PPL/Recall@k | manual cases, PPL/eval loss, Recall@k, MMLU/GSM8K, RAGAS/Phoenix | 評估 hallucination、citation、latency、cost、PPL 還是 retrieval recall？ |
+| Safety/Guardrails | 偵測幻覺/越獄/偏見並加上 request 前後防護 | Class8 AI safety demo | factual verification, jailbreak detection, bias/fairness, safety wrapper, moderation | 規則型偵測夠不夠？要不要 pre/post filter 與人工審核？ |
 
 ## English
 
@@ -42,6 +44,8 @@
 | SFT dataset engineering | Design, generate, sample, mix, and validate SFT training records | Class6 SFT dataset lecture/data workflow | data buckets, ChatML/messages, JSONL, train/eval split, bucket ratios | Which capability should be trained? Are bucket ratios, quality checks, and eval coverage sufficient? |
 | Fine-tuning/SFT | Adapt model behavior, format, or style with labeled examples | Class5 SFT lecture | ChatML, Hugging Face Datasets, PEFT, LoRA, QLoRA, TRL, DeepSpeed | Does the problem need weight updates, or are prompt/RAG enough? |
 | Fine-tuning extensions | Add acceleration, wrappers, distributed training, and memory optimization | Extension of Class5 | Unsloth, Axolotl, LLaMA-Factory, FSDP, gradient checkpointing, FlashAttention | Learn the internals first, or use frameworks for reproducibility and speed? |
+| Alignment | Align post-SFT behavior with chosen/rejected preferences | Class7 PPO/DPO/GRPO comparison | preference data, PPO, DPO, GRPO, reward model, TRL trainers | Reward-model fine control (PPO), or direct preference optimization (DPO/GRPO)? |
 | Tool/plugin/protocol layer | Let models call external tools and apps reliably | Extension across Class1-Class5 | OpenAI tool calling, MCP, LangChain tools, Pydantic AI toolsets, plugins | Are permissions, side effects, schema, and provenance clear? |
 | Serving and integration | Turn tools into callable services or agent components | Class3 voice agent, Class4 vLLM-compatible endpoint | FastAPI, vLLM, OpenAI-compatible APIs | Demo server or deployable service with observability? |
 | Evaluation | Test output quality, retrieval hits, fine-tuning loss, and failure cases | Class1 defects, Class4 RAG evaluation, Class5 PPL/Recall@k | manual cases, PPL/eval loss, Recall@k, MMLU/GSM8K, RAGAS/Phoenix | Which matters most: hallucination, citations, latency, cost, PPL, or retrieval recall? |
+| Safety/Guardrails | Detect hallucination/jailbreak/bias and add pre/post protection | Class8 AI safety demo | factual verification, jailbreak detection, bias/fairness, safety wrapper, moderation | Is rule-based detection enough? Do you need pre/post filters and human review? |

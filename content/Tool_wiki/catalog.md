@@ -50,6 +50,19 @@
 | Behavioral data bucket | Dataset bucket | Course-covered | Class6 random behavioral question sampling | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
 | Scenario-based data bucket | Dataset bucket | Course-covered | Class6 production scenario questions | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
 | Identity Reinforcement data bucket | Dataset bucket | Course-covered | Class6 role-setting QA pairs | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Preference alignment (RLHF/RLAIF) | Alignment workflow | Course-covered | Class7 PPO/DPO/GRPO comparison | [class7-alignment](tools/class7-alignment.md) |
+| PPO (Proximal Policy Optimization) | Alignment method | Course-covered | Class7 RLHF reward-model route | [class7-alignment](tools/class7-alignment.md) |
+| DPO (Direct Preference Optimization) | Alignment method | Course-covered | Class7 direct preference optimization | [class7-alignment](tools/class7-alignment.md) |
+| GRPO (Group Relative Policy Optimization) | Alignment method | Course-covered | Class7 group-relative optimization | [class7-alignment](tools/class7-alignment.md) |
+| Preference dataset (chosen/rejected) | Alignment data | Course-covered | Class7 preference annotation | [class7-alignment](tools/class7-alignment.md) |
+| Reward model | Alignment component | Course-covered | Class7 PPO reward signal | [class7-alignment](tools/class7-alignment.md) |
+| TRL alignment trainers (DPO/PPO/GRPO) | Alignment library | Course-covered | Class7 DPO/PPO/GRPO trainers | [class7-alignment](tools/class7-alignment.md) |
+| AI safety testing and guardrails | Safety workflow | Course-covered | Class8 AI safety demo | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Hallucination detection | Safety pattern | Course-covered | Class8 hallucination tests | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Jailbreak red-teaming | Safety pattern | Course-covered | Class8 jailbreak tests | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Bias and fairness detection | Safety pattern | Course-covered | Class8 bias/ethics analysis | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Safety guardrail wrapper (pre/post filter) | Safety component | Course-covered | Class8 safety pipeline | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Content moderation and sanitization | Safety component | Course-covered | Class8 moderation/sanitization | [class8-ai-safety](tools/class8-ai-safety.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
 | LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class6 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |
@@ -121,6 +134,19 @@
 | Behavioral data bucket | Dataset bucket | Course-covered | Class6 random behavioral question sampling | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
 | Scenario-based data bucket | Dataset bucket | Course-covered | Class6 production scenario questions | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
 | Identity Reinforcement data bucket | Dataset bucket | Course-covered | Class6 role-setting QA pairs | [class6-sft-dataset-engineering](tools/class6-sft-dataset-engineering.md) |
+| Preference alignment (RLHF/RLAIF) | Alignment workflow | Course-covered | Class7 PPO/DPO/GRPO comparison | [class7-alignment](tools/class7-alignment.md) |
+| PPO (Proximal Policy Optimization) | Alignment method | Course-covered | Class7 RLHF reward-model route | [class7-alignment](tools/class7-alignment.md) |
+| DPO (Direct Preference Optimization) | Alignment method | Course-covered | Class7 direct preference optimization | [class7-alignment](tools/class7-alignment.md) |
+| GRPO (Group Relative Policy Optimization) | Alignment method | Course-covered | Class7 group-relative optimization | [class7-alignment](tools/class7-alignment.md) |
+| Preference dataset (chosen/rejected) | Alignment data | Course-covered | Class7 preference annotation | [class7-alignment](tools/class7-alignment.md) |
+| Reward model | Alignment component | Course-covered | Class7 PPO reward signal | [class7-alignment](tools/class7-alignment.md) |
+| TRL alignment trainers (DPO/PPO/GRPO) | Alignment library | Course-covered | Class7 DPO/PPO/GRPO trainers | [class7-alignment](tools/class7-alignment.md) |
+| AI safety testing and guardrails | Safety workflow | Course-covered | Class8 AI safety demo | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Hallucination detection | Safety pattern | Course-covered | Class8 hallucination tests | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Jailbreak red-teaming | Safety pattern | Course-covered | Class8 jailbreak tests | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Bias and fairness detection | Safety pattern | Course-covered | Class8 bias/ethics analysis | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Safety guardrail wrapper (pre/post filter) | Safety component | Course-covered | Class8 safety pipeline | [class8-ai-safety](tools/class8-ai-safety.md) |
+| Content moderation and sanitization | Safety component | Course-covered | Class8 moderation/sanitization | [class8-ai-safety](tools/class8-ai-safety.md) |
 | FAISS | Vector search | Course-covered | Class4 RAG/HW | [faiss-vector-search](tools/faiss-vector-search.md) |
 | LangChain RetrievalQA | RAG chain | Course-covered | Class4 RAG | [langchain-rag](tools/langchain-rag.md) |
 | LlamaIndex, LiteLLM | RAG/API framework | Supplemental | Useful next tools beyond Class1-Class6 | [supplemental-rag-frameworks](tools/supplemental-rag-frameworks.md) |

@@ -1,6 +1,6 @@
 # MLE Gen AI Course Tool Reference
 
-Bilingual static reference site for tools used in `Machine Learning Engineer in the Generative AI Era`, focused on Class1-Class6 and curated extensions.
+Bilingual static reference site for tools used in `Machine Learning Engineer in the Generative AI Era`, focused on Class1-Class8 and curated extensions.
 
 ## Static Site
 
